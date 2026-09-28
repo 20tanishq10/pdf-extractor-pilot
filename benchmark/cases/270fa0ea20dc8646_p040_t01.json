@@ -1,0 +1,65 @@
+{
+ "case_id": "270fa0ea20dc8646_p040_t01",
+ "document_file": "HP-Report-No-2-of-2026-SFAR-2024-25-English-06a995015d08ee1.68791217.pdf",
+ "document_sha256": "270fa0ea20dc8646b5f4c7703d030d66af12dd224e19294d04c7f6b6726ab59d",
+ "page": 40,
+ "table_id": "p040_t01",
+ "caption": "Table 1.16: Revenue Expenditure – Basic Parameters",
+ "snapshot": "data/processed/270fa0ea20dc8646/snapshots/p040_t01.png",
+ "gold_unit": "INR crore",
+ "rows": [
+  {
+   "label": "Total Expenditure (TE)",
+   "variable": null,
+   "values": {
+    "2020-21": 39164.25,
+    "2021-22": 42601.89,
+    "2022-23": 50564.72,
+    "2023-24": 50468.37,
+    "2024-25": 53668.04
+   },
+   "note": ""
+  },
+  {
+   "label": "Revenue Expenditure (RE)",
+   "variable": "revenue_expenditure",
+   "values": {
+    "2020-21": 33534.93,
+    "2021-22": 36194.54,
+    "2022-23": 44425.26,
+    "2023-24": 44731.63,
+    "2024-25": 47676.96
+   },
+   "note": ""
+  },
+  {
+   "label": "RE as percentage of Revenue Receipts",
+   "variable": null,
+   "values": {
+    "2020-21": 100.29,
+    "2021-22": 97.01,
+    "2022-23": 116.63,
+    "2023-24": 114.19,
+    "2024-25": 116.65
+   },
+   "note": ""
+  },
+  {
+   "label": "RE as percentage of TE",
+   "variable": null,
+   "values": {
+    "2020-21": 85.63,
+    "2021-22": 84.96,
+    "2022-23": 87.86,
+    "2023-24": 88.63,
+    "2024-25": 88.84
+   },
+   "note": ""
+  }
+ ],
+ "status": "draft",
+ "verified_by": "",
+ "verified_at": "",
+ "notes": "",
+ "prefilled_from": "rule-based pipeline output (UNVERIFIED)"
+}

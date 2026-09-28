@@ -1,0 +1,94 @@
+{
+ "case_id": "ea199b1b4aaec7a6_p011_t00",
+ "document_file": "Himachal Pradesh.pdf",
+ "document_sha256": "ea199b1b4aaec7a6054ce36aa5e52b96572ea3fa8c2c78ea33a28cd8ea8208b3",
+ "page": 11,
+ "table_id": "p011_t00",
+ "caption": null,
+ "snapshot": "data/processed/ea199b1b4aaec7a6/snapshots/p011_t00.png",
+ "gold_unit": "percent",
+ "rows": [
+  {
+   "label": "Salaries",
+   "variable": null,
+   "values": {
+    "2005-06": 44.69,
+    "2009-10": 40.41,
+    "2015-16": 30.51,
+    "2016-17": 31.98
+   },
+   "note": ""
+  },
+  {
+   "label": "Pensions",
+   "variable": null,
+   "values": {
+    "2005-06": 14.5,
+    "2009-10": 13.6,
+    "2015-16": 17.2,
+    "2016-17": 16.23
+   },
+   "note": ""
+  },
+  {
+   "label": "Interest",
+   "variable": null,
+   "values": {
+    "2005-06": 26.76,
+    "2009-10": 19.76,
+    "2015-16": 14.15,
+    "2016-17": 13.25
+   },
+   "note": ""
+  },
+  {
+   "label": "Maintenance",
+   "variable": null,
+   "values": {
+    "2005-06": 2.89,
+    "2009-10": 8.34,
+    "2015-16": 7.39,
+    "2016-17": 7.03
+   },
+   "note": ""
+  },
+  {
+   "label": "Subsidies",
+   "variable": null,
+   "values": {
+    "2005-06": 1.72,
+    "2009-10": 3.14,
+    "2015-16": 6.04,
+    "2016-17": 3.01
+   },
+   "note": ""
+  },
+  {
+   "label": "Others",
+   "variable": null,
+   "values": {
+    "2005-06": 9.44,
+    "2009-10": 14.75,
+    "2015-16": 24.71,
+    "2016-17": 28.47
+   },
+   "note": ""
+  },
+  {
+   "label": "Total",
+   "variable": null,
+   "values": {
+    "2005-06": 100.0,
+    "2009-10": 100.0,
+    "2015-16": 100.0,
+    "2016-17": 100.0
+   },
+   "note": ""
+  }
+ ],
+ "status": "draft",
+ "verified_by": "",
+ "verified_at": "",
+ "notes": "",
+ "prefilled_from": "rule-based pipeline output (UNVERIFIED)"
+}

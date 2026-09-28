@@ -1,0 +1,188 @@
+{
+ "case_id": "270fa0ea20dc8646_p023_t00",
+ "document_file": "HP-Report-No-2-of-2026-SFAR-2024-25-English-06a995015d08ee1.68791217.pdf",
+ "document_sha256": "270fa0ea20dc8646b5f4c7703d030d66af12dd224e19294d04c7f6b6726ab59d",
+ "page": 23,
+ "table_id": "p023_t00",
+ "caption": "Table 1.3: Snapshot of Finances",
+ "snapshot": "data/processed/270fa0ea20dc8646/snapshots/p023_t00.png",
+ "gold_unit": "INR crore",
+ "rows": [
+  {
+   "label": "Tax revenue (i+ii)",
+   "variable": null,
+   "values": {
+    "2023-24": 21210.01,
+    "2024-25": 23453.24
+   },
+   "note": ""
+  },
+  {
+   "label": "Own Tax revenue",
+   "variable": null,
+   "values": {
+    "2023-24": 11835.29,
+    "2024-25": 12772.0
+   },
+   "note": ""
+  },
+  {
+   "label": "Share of Union Taxes/ Duties",
+   "variable": "union_tax_share",
+   "values": {
+    "2023-24": 9374.72,
+    "2024-25": 10681.24
+   },
+   "note": ""
+  },
+  {
+   "label": "Non-Tax revenue",
+   "variable": null,
+   "values": {
+    "2023-24": 3020.88,
+    "2024-25": 3697.5
+   },
+   "note": ""
+  },
+  {
+   "label": "Grants-in-aid and Contributions",
+   "variable": null,
+   "values": {
+    "2023-24": 14942.15,
+    "2024-25": 13721.61
+   },
+   "note": ""
+  },
+  {
+   "label": "Revenue Receipts (1+2+3)",
+   "variable": "revenue_receipts",
+   "values": {
+    "2023-24": 39173.04,
+    "2024-25": 40872.35
+   },
+   "note": ""
+  },
+  {
+   "label": "Recovery of Loans and Advances",
+   "variable": null,
+   "values": {
+    "2023-24": 27.4,
+    "2024-25": 184.64
+   },
+   "note": ""
+  },
+  {
+   "label": "Other Receipts",
+   "variable": null,
+   "values": {
+    "2023-24": 2.2,
+    "2024-25": 0.0
+   },
+   "note": ""
+  },
+  {
+   "label": "Net Borrowings and other liabilities*",
+   "variable": null,
+   "values": {
+    "2023-24": 11265.73,
+    "2024-25": 12611.05
+   },
+   "note": ""
+  },
+  {
+   "label": "Capital Receipts (5+6+7)",
+   "variable": null,
+   "values": {
+    "2023-24": 11295.33,
+    "2024-25": 12795.69
+   },
+   "note": ""
+  },
+  {
+   "label": "Total Receipts (4+8)",
+   "variable": null,
+   "values": {
+    "2023-24": 50468.37,
+    "2024-25": 53668.04
+   },
+   "note": ""
+  },
+  {
+   "label": "Revenue Expenditure",
+   "variable": "revenue_expenditure",
+   "values": {
+    "2023-24": 44731.63,
+    "2024-25": 47676.96
+   },
+   "note": ""
+  },
+  {
+   "label": "Interest payments#",
+   "variable": "interest_payments",
+   "values": {
+    "2023-24": 5648.37,
+    "2024-25": 6260.93
+   },
+   "note": ""
+  },
+  {
+   "label": "Capital Expenditure",
+   "variable": "capital_expenditure",
+   "values": {
+    "2023-24": 5629.79,
+    "2024-25": 5956.83
+   },
+   "note": ""
+  },
+  {
+   "label": "Loans and Advances disbursed",
+   "variable": null,
+   "values": {
+    "2023-24": 106.95,
+    "2024-25": 34.25
+   },
+   "note": ""
+  },
+  {
+   "label": "Total Expenditure (10+12+13)",
+   "variable": null,
+   "values": {
+    "2023-24": 50468.37,
+    "2024-25": 53668.04
+   },
+   "note": ""
+  },
+  {
+   "label": "Revenue Deficit (-)/ Surplus (+) (4-10)",
+   "variable": "revenue_deficit_surplus",
+   "values": {
+    "2023-24": -5558.59,
+    "2024-25": -6804.61
+   },
+   "note": ""
+  },
+  {
+   "label": "Fiscal Deficit {(4+5+6)-14}",
+   "variable": "fiscal_deficit",
+   "values": {
+    "2023-24": -11265.73,
+    "2024-25": -12611.05
+   },
+   "note": ""
+  },
+  {
+   "label": "Primary Deficit (16-11)",
+   "variable": null,
+   "values": {
+    "2023-24": -5617.36,
+    "2024-25": -6350.12
+   },
+   "note": ""
+  }
+ ],
+ "status": "draft",
+ "verified_by": "",
+ "verified_at": "",
+ "notes": "",
+ "prefilled_from": "rule-based pipeline output (UNVERIFIED)"
+}

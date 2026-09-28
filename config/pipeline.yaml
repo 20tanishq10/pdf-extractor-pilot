@@ -1,0 +1,82 @@
+# Tunable thresholds. Changing a value here invalidates only the pipeline stages that use it.
+
+text:
+  # A page with fewer characters than this and at least one image is marked needs_ocr.
+  min_chars_for_text_layer: 50
+
+candidates:
+  # Page score = distinct_core_variables * w_core + distinct_aux_variables * w_aux
+  #            + min(term_hits, term_hits_cap) * w_term_hit + (fy_tokens >= 3) * w_years
+  #            + unit_declared * w_unit + min(captions, 3) * w_caption + (numbers >= 20) * w_numbers
+  weights:
+    w_core: 10
+    w_aux: 3
+    w_term_hit: 0.5
+    term_hits_cap: 20
+    w_years: 5
+    w_unit: 3
+    w_caption: 2
+    w_numbers: 4
+  min_score: 20
+  # Only pages that can yield year-indexed tables: >= 2 financial-year tokens and some numbers.
+  min_fy_tokens: 2
+  min_numeric_tokens: 10
+  max_pages: 150
+
+tables:
+  # Ruled tables come from PyMuPDF's line strategy. "wordgrid" then rebuilds every other
+  # year-headed table from word positions (scanned/OCR'd pages, unruled tables).
+  # ("text" = PyMuPDF's text strategy, the older fallback.)
+  primary_strategy: lines
+  fallback_strategy: wordgrid
+  caption_search_distance_pt: 260
+  source_note_search_distance_pt: 90
+  snapshot_zoom: 1.6
+
+learn:
+  # a rejection pattern needs at least this many supporting rejections to become a suggestion
+  min_support: 2
+
+confidence:
+  tiers:
+    exact: 0.95      # >= 0.95 exact / near-exact table match
+    strong: 0.80     # 0.80 - 0.95 strong semantic match
+    ambiguous: 0.60  # 0.60 - 0.80 ambiguous; below -> manual review
+  review_below: 0.80
+  alias_exact: 0.98
+  major_head: 0.99       # row identified by its List of Major Heads code
+  pattern_match: 0.92
+  unit_inherited: 0.98
+  unit_missing: 0.70
+  caption_missing: 0.95
+  single_variable_table: 0.97
+  text_strategy: 0.90
+  corroboration_bonus: 0.03
+  parse_note_penalties:
+    split_sign: 0.98
+    footnote_marker: 0.97
+    parentheses_negative: 0.85
+    split_cell: 0.90
+
+reconciliation:
+  # Two observations of the same state x year x variable "agree" if they differ by no more
+  # than this many units (rounding noise in 2-decimal crore tables).
+  agreement_abs_tolerance: 0.05
+
+validation:
+  identity_abs_tolerance: 1.0     # crore
+  identity_rel_tolerance: 0.001   # of revenue expenditure
+  yoy_max_change: 0.50            # flag |growth| > 50 % for non-negative flow/stock variables
+  yoy_magnitude_jump: 10          # flag >= 10x jumps as possible unit errors
+  fy_min_start_year: 1950
+  ratio_checks:
+    - {numerator: salary_wages, denominator: revenue_expenditure, min: 0.05, max: 0.75}
+    - {numerator: pension_expenditure, denominator: revenue_expenditure, min: 0.005, max: 0.45}
+    - {numerator: interest_payments, denominator: revenue_receipts, min: 0.0, max: 0.60}
+    - {numerator: revenue_expenditure, denominator: revenue_receipts, min: 0.5, max: 2.5}
+    - {numerator: capital_expenditure, denominator: revenue_expenditure, min: 0.01, max: 1.0}
+    - {numerator: gsdp, denominator: revenue_receipts, min: 2.0, max: 40.0}
+    - {numerator: outstanding_liabilities, denominator: gsdp, min: 0.05, max: 1.5}
+    # |fiscal deficit| of a few crore against thousands of crore of receipts usually means a
+    # ratio (% of GSDP) was read as a level.
+    - {numerator: fiscal_deficit, denominator: revenue_receipts, min: 0.001, max: 1.0, abs: true}

@@ -1,0 +1,221 @@
+{
+ "case_id": "270fa0ea20dc8646_p060_t00",
+ "document_file": "HP-Report-No-2-of-2026-SFAR-2024-25-English-06a995015d08ee1.68791217.pdf",
+ "document_sha256": "270fa0ea20dc8646b5f4c7703d030d66af12dd224e19294d04c7f6b6726ab59d",
+ "page": 60,
+ "table_id": "p060_t00",
+ "caption": "Table 1.30: Component-wise liability trends",
+ "snapshot": "data/processed/270fa0ea20dc8646/snapshots/p060_t00.png",
+ "gold_unit": "INR crore",
+ "rows": [
+  {
+   "label": "Outstanding Total Liability",
+   "variable": null,
+   "values": {
+    "2020-21": 67164.75,
+    "2021-22": 69122.58,
+    "2022-23": 82177.21,
+    "2023-24": 91220.73,
+    "2024-25": 102187.62
+   },
+   "note": ""
+  },
+  {
+   "label": "Public Debt",
+   "variable": null,
+   "values": {
+    "2020-21": 44462.75,
+    "2021-22": 48432.22,
+    "2022-23": 58951.25,
+    "2023-24": 65956.9,
+    "2024-25": 74410.25
+   },
+   "note": ""
+  },
+  {
+   "label": "Internal Debt",
+   "variable": null,
+   "values": {
+    "2020-21": 42918.21,
+    "2021-22": 44376.03,
+    "2022-23": 55975.16,
+    "2023-24": 61439.29,
+    "2024-25": 67448.38
+   },
+   "note": ""
+  },
+  {
+   "label": "Loans and Advances from GoI*",
+   "variable": null,
+   "values": {
+    "2020-21": 1544.54,
+    "2021-22": 4056.19,
+    "2022-23": 2976.09,
+    "2023-24": 4517.61,
+    "2024-25": 6961.87
+   },
+   "note": ""
+  },
+  {
+   "label": "Public Account Liabilities, of which",
+   "variable": null,
+   "values": {
+    "2020-21": 22702.0,
+    "2021-22": 22407.36,
+    "2022-23": 23225.96,
+    "2023-24": 25263.83,
+    "2024-25": 27777.37
+   },
+   "note": ""
+  },
+  {
+   "label": "Small Savings, Provident Funds, etc.",
+   "variable": null,
+   "values": {
+    "2020-21": 16522.64,
+    "2021-22": 17006.28,
+    "2022-23": 17682.25,
+    "2023-24": 19337.57,
+    "2024-25": 20867.38
+   },
+   "note": ""
+  },
+  {
+   "label": "Reserve Funds bearing Interest",
+   "variable": null,
+   "values": {
+    "2020-21": 1882.54,
+    "2021-22": 1657.9,
+    "2022-23": 1664.27,
+    "2023-24": 1969.07,
+    "2024-25": 2739.21
+   },
+   "note": ""
+  },
+  {
+   "label": "Reserve Funds not bearing Interest",
+   "variable": null,
+   "values": {
+    "2020-21": 834.66,
+    "2021-22": 316.0,
+    "2022-23": 270.44,
+    "2023-24": 310.7,
+    "2024-25": 140.23
+   },
+   "note": ""
+  },
+  {
+   "label": "Deposits bearing Interest",
+   "variable": null,
+   "values": {
+    "2020-21": 7.66,
+    "2021-22": 14.3,
+    "2022-23": 17.39,
+    "2023-24": 16.5,
+    "2024-25": 16.6
+   },
+   "note": ""
+  },
+  {
+   "label": "Deposits not bearing Interest",
+   "variable": null,
+   "values": {
+    "2020-21": 3454.5,
+    "2021-22": 3412.88,
+    "2022-23": 3591.61,
+    "2023-24": 3629.99,
+    "2024-25": 4013.95
+   },
+   "note": ""
+  },
+  {
+   "label": "Rate of growth of outstanding total liability (percentage)",
+   "variable": null,
+   "values": {
+    "2020-21": 7.96,
+    "2021-22": 2.91,
+    "2022-23": 18.89,
+    "2023-24": 11.0,
+    "2024-25": 12.02
+   },
+   "note": ""
+  },
+  {
+   "label": "Gross State Domestic Product (GSDP)",
+   "variable": "gsdp",
+   "values": {
+    "2020-21": 151905.0,
+    "2021-22": 170376.0,
+    "2022-23": 192026.0,
+    "2023-24": 212169.0,
+    "2024-25": 231690.0
+   },
+   "note": ""
+  },
+  {
+   "label": "Total liability/GSDP (per cent)",
+   "variable": null,
+   "values": {
+    "2020-21": 44.21,
+    "2021-22": 40.57,
+    "2022-23": 42.79,
+    "2023-24": 42.99,
+    "2024-25": 44.11
+   },
+   "note": ""
+  },
+  {
+   "label": "Total Public Debt Receipts",
+   "variable": null,
+   "values": {
+    "2020-21": 15032.21,
+    "2021-22": 6639.75,
+    "2022-23": 22371.82,
+    "2023-24": 14901.51,
+    "2024-25": 26622.16
+   },
+   "note": ""
+  },
+  {
+   "label": "Total Public Debt Repayments",
+   "variable": null,
+   "values": {
+    "2020-21": 11141.05,
+    "2021-22": 4387.28,
+    "2022-23": 10135.8,
+    "2023-24": 7895.87,
+    "2024-25": 18168.81
+   },
+   "note": ""
+  },
+  {
+   "label": "Net funds available",
+   "variable": null,
+   "values": {
+    "2020-21": 3891.16,
+    "2021-22": 2252.47,
+    "2022-23": 12236.02,
+    "2023-24": 7005.64,
+    "2024-25": 8453.35
+   },
+   "note": ""
+  },
+  {
+   "label": "Repayments/ Receipts (per cent)",
+   "variable": null,
+   "values": {
+    "2020-21": 74.11,
+    "2021-22": 66.08,
+    "2022-23": 45.31,
+    "2023-24": 52.99,
+    "2024-25": 68.25
+   },
+   "note": ""
+  }
+ ],
+ "status": "draft",
+ "verified_by": "",
+ "verified_at": "",
+ "notes": "",
+ "prefilled_from": "rule-based pipeline output (UNVERIFIED)"
+}

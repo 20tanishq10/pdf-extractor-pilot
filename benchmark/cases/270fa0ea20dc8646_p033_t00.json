@@ -1,0 +1,113 @@
+{
+ "case_id": "270fa0ea20dc8646_p033_t00",
+ "document_file": "HP-Report-No-2-of-2026-SFAR-2024-25-English-06a995015d08ee1.68791217.pdf",
+ "document_sha256": "270fa0ea20dc8646b5f4c7703d030d66af12dd224e19294d04c7f6b6726ab59d",
+ "page": 33,
+ "table_id": "p033_t00",
+ "caption": "Table 1.8: Components of State’s share in Union taxes and duties",
+ "snapshot": "data/processed/270fa0ea20dc8646/snapshots/p033_t00.png",
+ "gold_unit": "INR crore",
+ "rows": [
+  {
+   "label": "Central Goods and Services Tax (CGST)",
+   "variable": null,
+   "values": {
+    "2020-21": 1419.55,
+    "2021-22": 2105.41,
+    "2022-23": 2227.15,
+    "2023-24": 2845.13,
+    "2024-25": 3119.54
+   },
+   "note": ""
+  },
+  {
+   "label": "Corporation Tax",
+   "variable": null,
+   "values": {
+    "2020-21": 1429.44,
+    "2021-22": 2202.48,
+    "2022-23": 2644.66,
+    "2023-24": 2813.87,
+    "2024-25": 3030.83
+   },
+   "note": ""
+  },
+  {
+   "label": "Taxes on Income other than Corporation Tax",
+   "variable": null,
+   "values": {
+    "2020-21": 1464.84,
+    "2021-22": 2169.83,
+    "2022-23": 2579.8,
+    "2023-24": 3249.67,
+    "2024-25": 3865.36
+   },
+   "note": ""
+  },
+  {
+   "label": "Customs",
+   "variable": null,
+   "values": {
+    "2020-21": 257.07,
+    "2021-22": 510.58,
+    "2022-23": 309.82,
+    "2023-24": 328.53,
+    "2024-25": 543.46
+   },
+   "note": ""
+  },
+  {
+   "label": "Union Excise Duties",
+   "variable": null,
+   "values": {
+    "2020-21": 160.44,
+    "2021-22": 265.82,
+    "2022-23": 97.22,
+    "2023-24": 124.32,
+    "2024-25": 104.56
+   },
+   "note": ""
+  },
+  {
+   "label": "Service Tax",
+   "variable": null,
+   "values": {
+    "2020-21": 19.39,
+    "2021-22": 87.35,
+    "2022-23": 12.36,
+    "2023-24": 1.73,
+    "2024-25": 0.3
+   },
+   "note": ""
+  },
+  {
+   "label": "Other Taxes3",
+   "variable": null,
+   "values": {
+    "2020-21": 3.19,
+    "2021-22": 7.57,
+    "2022-23": 12.97,
+    "2023-24": 11.47,
+    "2024-25": 17.19
+   },
+   "note": ""
+  },
+  {
+   "label": "Total",
+   "variable": null,
+   "values": {
+    "2020-21": 4753.92,
+    "2021-22": 7349.04,
+    "2022-23": 7883.98,
+    "2023-24": 9374.72,
+    "2024-25": 10681.24
+   },
+   "note": ""
+  }
+ ],
+ "status": "draft",
+ "verified_by": "",
+ "verified_at": "",
+ "notes": "",
+ "prefilled_from": "rule-based pipeline output (UNVERIFIED)"
+}

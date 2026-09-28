@@ -1,0 +1,31 @@
+{
+ "case_id": "ea199b1b4aaec7a6_p106_t01",
+ "document_file": "Himachal Pradesh.pdf",
+ "document_sha256": "ea199b1b4aaec7a6054ce36aa5e52b96572ea3fa8c2c78ea33a28cd8ea8208b3",
+ "page": 106,
+ "table_id": "p106_t01",
+ "caption": null,
+ "snapshot": "data/processed/ea199b1b4aaec7a6/snapshots/p106_t01.png",
+ "gold_unit": null,
+ "rows": [
+  {
+   "label": "Fiscal deficit",
+   "variable": "fiscal_deficit",
+   "values": {
+    "2010-11": 4.06,
+    "2011-12": 2.25,
+    "2012-13": 3.59,
+    "2013-14": 4.23,
+    "2014-15": 4.05,
+    "2015-16": 1.62,
+    "2016-17": 4.7
+   },
+   "note": ""
+  }
+ ],
+ "status": "draft",
+ "verified_by": "",
+ "verified_at": "",
+ "notes": "Hint from the pipeline author: values (1.62 ... 6.78) look like fiscal deficit as % of GSDP, not a level in crore; headers include '2018-19 RE' and '2019-20 Est.'. Probably variable null. Check the snapshot.",
+ "prefilled_from": "rule-based pipeline output (UNVERIFIED)"
+}

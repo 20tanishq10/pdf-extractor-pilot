@@ -1,0 +1,333 @@
+# Canonical variables and the accounting labels that map to them.
+#
+# How mapping works (see src/statefin/extraction/mapper.py):
+#   1. The raw row label is normalised: numbering ("10.", "(i)"), formula references
+#      ("(1+2+3)", "(4-10)"), sign markers ("(-)", "(+)"), unit notes ("(₹ in crore)"),
+#      short abbreviations ("(RE)", "(GSDP)") and footnote markers ("Wages4", "payments#")
+#      are stripped; "&" becomes "and"; everything is lower-cased.
+#   2. If the normalised label matches a global exclude (ratios, growth rates, per cent...)
+#      it is never mapped.
+#   3. Otherwise it must match an alias EXACTLY or a pattern IN FULL (regex fullmatch).
+#      Substring matching is deliberately not used: "Interest Payment/Revenue Receipts"
+#      must not become revenue_receipts.
+#
+# Aliases are written as they appear in documents; they are normalised with the same
+# function at load time. An alias may carry its own confidence and a caveat note, which
+# is attached to every observation it produces and sends it to review.
+#
+# role:  core       -> part of the analytical panel, reported as missing if not found
+#        optional   -> panel column, never reported as missing
+#        auxiliary  -> extracted only to derive or cross-check a core variable
+# unit_kind: currency variables only accept values from tables/rows whose unit is a
+#            currency unit (or undeclared, at reduced confidence).
+# plausible_range_crore: very wide sanity bounds, meant to catch unit/scale errors only.
+# definition_rules: tags recording WHICH definition an observation uses, read from the row
+#   label, its footnote, the table caption/section, the column header and the cited source.
+#   Tags never change a value; the panel flags a structural break where they change.
+# context_excludes: caption/section text that rules the variable out for a whole table.
+# major_heads: List of Major and Minor Heads codes; a row "Total (2071)" or "2071 Pensions..."
+#   maps by code, which is more stable than wording (Finance Accounts, budget documents).
+# preferred_components: which sub-column to take when a year is split into
+#   Revenue/Capital/Total or Charged/Voted/Total (default: [total]).
+# definition rule flags: `substantive` tags are compared across years for structural
+#   breaks; `variant` tags measure a different quantity and are reconciled separately.
+
+version: 1
+
+global_label_excludes:
+  - '\bas (a )?(percentage|per cent|percent|share|proportion|ratio|multiple)\b'
+  - '\bper ?cent\b'
+  - '%'
+  - '\bratio\b'
+  - '\bgrowth\b'
+  - '\brate of\b'
+  - '\bbuoyancy\b'
+  - '\belasticity\b'
+  - '\bdays\b'
+  - '\bshare in total\b'
+  - '/ ?(gsdp|gdp|revenue receipts|revenue expenditure|total expenditure|te|rr|re|own revenue)\b'
+  - '\bto (gsdp|gdp|revenue receipts|revenue expenditure|total expenditure)\b'
+
+variables:
+
+  revenue_receipts:
+    role: core
+    description: Total revenue receipts (own tax + own non-tax + share in Union taxes + grants-in-aid).
+    unit_kind: currency
+    allow_negative: false
+    search_terms: ['revenue receipts?']
+    aliases:
+      - Revenue Receipts
+      - Total Revenue Receipts
+      - Revenue Receipts (RR)
+    patterns:
+      - '(total )?revenue receipts( of the state)?( total)?'
+    plausible_range_crore: [10, 3000000]
+
+  revenue_expenditure:
+    role: core
+    description: Total expenditure on revenue account (including interest payments).
+    unit_kind: currency
+    allow_negative: false
+    search_terms: ['revenue expenditure']
+    aliases:
+      - Revenue Expenditure
+      - Total Revenue Expenditure
+    patterns:
+      - '(total )?revenue expenditure( of the state)?( total)?'
+    plausible_range_crore: [10, 3000000]
+
+  salary_wages:
+    role: core
+    description: Expenditure on salaries and wages (committed expenditure component).
+    unit_kind: currency
+    allow_negative: false
+    search_terms: ['salar(?:y|ies)', 'wages', 'pay and allowances']
+    context_excludes: ['non-?tax revenue', '\breceipts?\b', '\brevenue heads?\b']
+    definition_rules:
+      - {tag: includes_gia_salary, substantive: true, where: [footnote, label, caption, section], pattern: 'grants?[- ]in[- ]aid\W+(?:\w+\W+){0,3}salar|gia\s+(?:on|for)?\s*salar|includes?\s+(?:\w+\s+){0,3}salar'}
+      - {tag: salaries_only, substantive: true, variant: true, where: [label_normalized], pattern: '^(?:expenditure on )?salar(?:y|ies)$'}
+      - {tag: object_head, where: [caption, section, column], pattern: 'object of expenditure|expenditure by nature|by object'}
+      - {tag: pay_and_allowances, substantive: true, variant: true, where: [label_normalized], pattern: 'pay and allowances'}
+    preferred_components: [revenue, total]
+    aliases:
+      - Salaries & Wages
+      - Salaries and Wages
+      - Salary and Wages
+      - Salary & Wages
+      - Expenditure on Salaries and Wages
+      - Salaries, Wages
+      - label: Pay and Allowances
+        confidence: 0.85
+        note: "'Pay and Allowances' may be narrower or broader than Salaries & Wages; check definition."
+      - label: Salaries
+        confidence: 0.80
+        note: "Label is 'Salaries' alone; may exclude wages (check whether a separate 'Wages' row exists)."
+      - label: Expenditure on Salaries
+        confidence: 0.80
+        note: "Label is 'Salaries' alone; may exclude wages."
+      - label: Salary
+        confidence: 0.80
+        note: "Label is 'Salary' alone; may exclude wages."
+    patterns: []
+    plausible_range_crore: [1, 1500000]
+
+  pension_expenditure:
+    role: core
+    description: Expenditure on pensions and other retirement benefits.
+    unit_kind: currency
+    allow_negative: false
+    search_terms: ['pension(?:s|ary)?', 'retirement benefits?']
+    # same label is used for pension RECEIPTS under non-tax revenue
+    context_excludes: ['non-?tax revenue', '\breceipts?\b', '\brevenue heads?\b']
+    definition_rules:
+      # table_rows: all row labels of the table, e.g. MH 2071 minor head 117 'Government Contribution for Defined Contribution Pension Scheme'
+      - {tag: includes_nps_contribution, substantive: true, where: [footnote, label, caption, table_rows], pattern: 'contribution\s+(?:to|towards|for)\s+(?:the\s+)?(?:nps|new pension|national pension|defined contribution)'}
+      - {tag: excludes_nps_contribution, substantive: true, where: [footnote, label, caption], pattern: 'exclud\w*\s+(?:\w+\s+){0,3}(?:nps|new pension|national pension)'}
+      - {tag: other_retirement_benefits, where: [label_normalized], pattern: 'retirement benefits'}
+      - {tag: object_head, substantive: true, variant: true, where: [caption, section, column], pattern: 'object of expenditure|expenditure by nature|by object'}
+      - {tag: major_head_2071, where: [label_normalized], pattern: '\b2071\b'}
+    major_heads: ['2071']
+    preferred_components: [revenue, total]
+    aliases:
+      - Pension
+      - Pensions
+      - Pension Payments
+      - Pensionary Charges
+      - Pensionary Charges and other Retirement Benefits
+      - Expenditure on Pension
+      - Expenditure on Pensions
+      - Pensions and Other Retirement Benefits
+      - Pension and Other Retirement Benefits
+      - Pensions & Other Retirement Benefits
+    patterns:
+      - '(expenditure on )?pensions?( and other retirement benefits)?( payments?)?'
+    plausible_range_crore: [0.5, 1000000]
+
+  interest_payments:
+    role: core
+    description: Interest payments (included in revenue expenditure).
+    unit_kind: currency
+    allow_negative: false
+    search_terms: ['interest payments?', 'interest on debt']
+    context_excludes: ['non-?tax revenue', '\breceipts?\b', '\brevenue heads?\b']
+    definition_rules:
+      - {tag: includes_wma_interest, substantive: true, where: [footnote, label], pattern: 'including\s+(?:\w+\s+){0,3}ways and means'}
+      # Finance Accounts Statement 4-B classifies by object; it differs slightly from major head 2049
+      - {tag: object_head, substantive: true, variant: true, where: [caption, section, column], pattern: 'object of expenditure|expenditure by nature|by object'}
+    major_heads: ['2049']
+    preferred_components: [revenue, total]
+    aliases:
+      - Interest Payments
+      - Interest Payment
+      - Interest
+      - Interest Payments (included in revenue expenditure)
+    patterns:
+      - '(total )?interest payments?( included in (the )?revenue expenditure)?( on debt)?'
+    plausible_range_crore: [0.5, 1000000]
+
+  capital_expenditure:
+    role: core
+    description: Capital expenditure / capital outlay (excluding loans and advances disbursed).
+    unit_kind: currency
+    allow_negative: false
+    search_terms: ['capital expenditure', 'capital outlay']
+    definition_rules:
+      - {tag: capital_outlay_label, where: [label_normalized], pattern: 'capital outlay'}
+      - {tag: net_of_receipts, substantive: true, variant: true, where: [label_normalized, caption], pattern: '\bnet capital'}
+    preferred_components: [capital, total]
+    aliases:
+      - Capital Expenditure
+      - Total Capital Expenditure
+      - Capital Expenditure (CE)
+      - Capex
+      - label: Capital Outlay
+        confidence: 0.92
+        note: "Label is 'Capital Outlay'; CAG capital expenditure equals capital outlay, but check the source's definition."
+    patterns:
+      - '(total )?capital expenditure( total)?'
+    plausible_range_crore: [0.5, 1500000]
+
+  revenue_deficit_surplus:
+    role: core
+    description: Revenue receipts minus revenue expenditure. Canonical sign convention is surplus-positive (deficit negative), as used by CAG.
+    unit_kind: currency
+    allow_negative: true
+    canonical_sign_convention: surplus_positive
+    search_terms: ['revenue (?:deficit|surplus)']
+    definition_rules:
+      - {tag: post_audit, substantive: true, variant: true, where: [caption, column, section], pattern: 'post[- ]?audit|post examination by audit'}
+    aliases:
+      - Revenue Deficit
+      - Revenue Surplus
+    patterns:
+      - 'revenue (deficit|surplus)( ?/ ?(revenue )?(deficit|surplus))?'
+    plausible_range_crore: [-1000000, 1000000]
+
+  fiscal_deficit:
+    role: core
+    description: Fiscal deficit as reported. Canonical sign convention is surplus-positive (deficit negative), as used by CAG.
+    unit_kind: currency
+    allow_negative: true
+    canonical_sign_convention: surplus_positive
+    search_terms: ['fiscal deficit']
+    definition_rules:
+      - {tag: post_audit, substantive: true, variant: true, where: [caption, column, section], pattern: 'post[- ]?audit|post examination by audit'}
+      - {tag: gross_fiscal_deficit, where: [label_normalized], pattern: 'gross fiscal deficit'}
+    aliases:
+      - Fiscal Deficit
+      - Gross Fiscal Deficit
+    patterns:
+      - '(gross )?fiscal (deficit|surplus)( ?/ ?(fiscal )?(deficit|surplus))?'
+    plausible_range_crore: [-1500000, 1500000]
+
+  outstanding_liabilities:
+    role: core
+    description: Outstanding liabilities / debt of the State at year-end.
+    unit_kind: currency
+    allow_negative: false
+    search_terms: ['outstanding (?:fiscal |total )?liabilit(?:y|ies)', 'overall (?:debt|liabilities)', 'public debt']
+    definition_rules:
+      - {tag: includes_off_budget, substantive: true, where: [footnote, label, caption, section], pattern: '(?<!ex)(?<!exc)includ\w*\s+(?:\w+\s+){0,3}off[- ]?budget|\+\s*off[- ]?budget'}
+      - {tag: excludes_off_budget, substantive: true, where: [footnote, label, caption, section], pattern: 'exclud\w*\s+(?:\w+\s+){0,3}off[- ]?budget'}
+      - {tag: debt_label, where: [label_normalized], pattern: '\bdebt\b'}
+    aliases:
+      - Outstanding Liabilities
+      - Total Outstanding Liabilities
+      - Outstanding Fiscal Liabilities
+      - Overall Liabilities or Overall Debt
+      - Overall Liabilities
+      - Outstanding Debt
+    patterns:
+      - '(total )?outstanding (fiscal |total )?liabilities( year ?end)?( at the end of the year)?'
+      - 'overall (liabilities|debt)( or overall (debt|liabilities))?'
+      - '(total )?outstanding (debt|liabilities)( of the state)?( year ?end)?( at the end of the year)?'
+    plausible_range_crore: [10, 5000000]
+
+  gsdp:
+    role: core
+    description: Gross State Domestic Product at current prices.
+    unit_kind: currency
+    allow_negative: false
+    search_terms: ['gsdp', 'gross state domestic product']
+    # GSDP at constant prices is a different variable: refuse such tables outright.
+    context_excludes: ['constant\s*(?:\(\s*\d{4}\s*[-–]\s*\d{2,4}\s*\)\s*)?prices', '\breal\s+gsdp']
+    definition_rules:
+      - {tag: current_prices, where: [label, caption, column, section], pattern: 'current prices|nominal'}
+      - {tag: advance_or_quick_estimate, substantive: true, variant: true, where: [label, caption, column, footnote], pattern: 'advance estimates?|quick estimates?|\bAE\b|\bQE\b|projected'}
+    aliases:
+      - GSDP
+      - Gross State Domestic Product
+      - GSDP (in nominal terms)
+      - GSDP at current prices
+      - Nominal GSDP
+    patterns:
+      - '(nominal )?(gsdp|gross state domestic product)( in nominal terms| at current prices)?'
+    plausible_range_crore: [500, 100000000]
+
+  central_transfers:
+    role: core
+    description: Transfers from the Union (share in Union taxes + grants-in-aid from GoI). If not reported as one row, the panel derives it from the two auxiliary components below.
+    unit_kind: currency
+    allow_negative: false
+    search_terms: ['central transfers', 'transfers from (?:the )?cent(?:re|er)', 'share (?:of|in) (?:union|central) taxes']
+    aliases:
+      - Central Transfers
+      - Total Central Transfers
+      - Transfers from the Centre
+      - Transfers from Centre
+    patterns:
+      - '(total )?(central transfers|transfers from (the )?cent(re|er))'
+    derive_from: [union_tax_share, grants_from_centre]
+    plausible_range_crore: [1, 2000000]
+
+  union_tax_share:
+    role: auxiliary
+    description: State's share of Union taxes and duties (component of central transfers).
+    unit_kind: currency
+    allow_negative: false
+    search_terms: []
+    aliases:
+      - Share of Union Taxes/Duties
+      - Share of Union Taxes and Duties
+      - State's share of Union taxes and duties
+      - States share of Union taxes and duties
+      - Share in Central Taxes
+      - Share of Central Taxes
+      - Central Tax Transfers
+    patterns:
+      - "(states? )?share (of|in) (union|central) taxes( ?/ ?| and )?(duties)?"
+    plausible_range_crore: [1, 1000000]
+
+  grants_from_centre:
+    role: auxiliary
+    description: Grants-in-aid from the Government of India (component of central transfers). "Grants-in-aid and contributions" is NOT mapped because the same label is also used for expenditure rows.
+    unit_kind: currency
+    allow_negative: false
+    search_terms: []
+    aliases:
+      - Grants-in-aid from Government of India
+      - Grants-in-aid from GoI
+      - Grants from Centre
+      - Grants from the Centre
+    patterns:
+      - 'grants( in aid)? from (the )?(government of india|goi|gol|centre|center|union( government)?)'   # "Gol": OCR of GoI
+    plausible_range_crore: [1, 1000000]
+
+  pensioners:
+    role: optional
+    description: Number of pensioners (persons). Not extracted in Phase 1.
+    unit_kind: count
+    allow_negative: false
+    search_terms: ['pensioners']
+    aliases: []
+    patterns: []
+
+  government_employees:
+    role: optional
+    description: Number of State government employees (persons). Not extracted in Phase 1.
+    unit_kind: count
+    allow_negative: false
+    search_terms: ['government employees']
+    aliases: []
+    patterns: []

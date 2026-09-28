@@ -1,0 +1,77 @@
+{
+ "case_id": "ea199b1b4aaec7a6_p019_t00",
+ "document_file": "Himachal Pradesh.pdf",
+ "document_sha256": "ea199b1b4aaec7a6054ce36aa5e52b96572ea3fa8c2c78ea33a28cd8ea8208b3",
+ "page": 19,
+ "table_id": "p019_t00",
+ "caption": null,
+ "snapshot": "data/processed/ea199b1b4aaec7a6/snapshots/p019_t00.png",
+ "gold_unit": null,
+ "rows": [
+  {
+   "label": "Finance Commission transfers 2",
+   "variable": null,
+   "values": {
+    "1970-71": 12.78,
+    "1980-81": 40.54,
+    "1990-91": 312.69,
+    "2000-01": 1219.24,
+    "2010-11": 4330.47
+   },
+   "note": ""
+  },
+  {
+   "label": "Planning Commission transfers 3",
+   "variable": null,
+   "values": {
+    "1970-71": 6.29,
+    "1980-81": 68.59,
+    "1990-91": 212.68,
+    "2000-01": 726.68,
+    "2010-11": 2680.22
+   },
+   "note": ""
+  },
+  {
+   "label": "Total transfers without CSS 4",
+   "variable": null,
+   "values": {
+    "1970-71": 19.07,
+    "1980-81": 109.13,
+    "1990-91": 525.37,
+    "2000-01": 1945.92,
+    "2010-11": 7010.69
+   },
+   "note": ""
+  },
+  {
+   "label": "Budget size 5",
+   "variable": null,
+   "values": {
+    "1970-71": 80.18,
+    "1980-81": 235.04,
+    "1990-91": 1221.71,
+    "2000-01": 4965.94,
+    "2010-11": 15078.92
+   },
+   "note": ""
+  },
+  {
+   "label": "Col. 5 as per cent of Col.6 6",
+   "variable": null,
+   "values": {
+    "1970-71": 23.78,
+    "1980-81": 46.43,
+    "1990-91": 43.0,
+    "2000-01": 39.19,
+    "2010-11": 46.49
+   },
+   "note": ""
+  }
+ ],
+ "status": "draft",
+ "verified_by": "",
+ "verified_at": "",
+ "notes": "",
+ "prefilled_from": "rule-based pipeline output (UNVERIFIED)"
+}

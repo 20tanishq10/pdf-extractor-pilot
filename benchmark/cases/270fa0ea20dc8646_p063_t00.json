@@ -1,0 +1,209 @@
+{
+ "case_id": "270fa0ea20dc8646_p063_t00",
+ "document_file": "HP-Report-No-2-of-2026-SFAR-2024-25-English-06a995015d08ee1.68791217.pdf",
+ "document_sha256": "270fa0ea20dc8646b5f4c7703d030d66af12dd224e19294d04c7f6b6726ab59d",
+ "page": 63,
+ "table_id": "p063_t00",
+ "caption": "Table 1.32: Components of Fiscal Deficit and its financing pattern",
+ "snapshot": "data/processed/270fa0ea20dc8646/snapshots/p063_t00.png",
+ "gold_unit": "INR crore",
+ "rows": [
+  {
+   "label": "Composition of Fiscal Deficit",
+   "variable": null,
+   "values": {
+    "2020-21": -5700.09,
+    "2021-22": -5244.85,
+    "2022-23": -12379.8,
+    "2023-24": -11265.73,
+    "2024-25": -12611.05
+   },
+   "note": ""
+  },
+  {
+   "label": "Revenue Surplus (+)/Deficit (-)",
+   "variable": "revenue_deficit_surplus",
+   "values": {
+    "2020-21": -96.66,
+    "2021-22": 1114.76,
+    "2022-23": -6335.76,
+    "2023-24": -5558.59,
+    "2024-25": -6804.61
+   },
+   "note": ""
+  },
+  {
+   "label": "Net Capital expenditure",
+   "variable": null,
+   "values": {
+    "2020-21": -5306.33,
+    "2021-22": -6022.37,
+    "2022-23": -6016.3,
+    "2023-24": -5627.59,
+    "2024-25": -5956.83
+   },
+   "note": ""
+  },
+  {
+   "label": "Net Loans and Advances",
+   "variable": null,
+   "values": {
+    "2020-21": -297.1,
+    "2021-22": -337.24,
+    "2022-23": -27.78,
+    "2023-24": -79.55,
+    "2024-25": 150.39
+   },
+   "note": ""
+  },
+  {
+   "label": "Market Borrowings",
+   "variable": null,
+   "values": {
+    "2020-21": 3755.0,
+    "2021-22": 1874.99,
+    "2022-23": 12230.0,
+    "2023-24": 6144.9,
+    "2024-25": 5014.0
+   },
+   "note": ""
+  },
+  {
+   "label": "Loans from Government of India",
+   "variable": null,
+   "values": {
+    "2020-21": 2217.73,
+    "2021-22": 3489.87,
+    "2022-23": 636.9,
+    "2023-24": 1541.52,
+    "2024-25": 2444.27
+   },
+   "note": ""
+  },
+  {
+   "label": "Special Securities issued to NSSF",
+   "variable": null,
+   "values": {
+    "2020-21": -569.1,
+    "2021-22": -569.1,
+    "2022-23": -569.1,
+    "2023-24": -569.1,
+    "2024-25": -569.1
+   },
+   "note": ""
+  },
+  {
+   "label": "Loans from Financial Institutions",
+   "variable": null,
+   "values": {
+    "2020-21": 204.54,
+    "2021-22": 151.92,
+    "2022-23": -61.78,
+    "2023-24": -111.68,
+    "2024-25": 1564.19
+   },
+   "note": ""
+  },
+  {
+   "label": "Small Savings, Provident Fund, etc.",
+   "variable": null,
+   "values": {
+    "2020-21": 985.51,
+    "2021-22": 483.65,
+    "2022-23": 675.96,
+    "2023-24": 1655.33,
+    "2024-25": 1529.81
+   },
+   "note": ""
+  },
+  {
+   "label": "Deposits and Advances",
+   "variable": null,
+   "values": {
+    "2020-21": 81.35,
+    "2021-22": -34.99,
+    "2022-23": 181.83,
+    "2023-24": 37.49,
+    "2024-25": 384.06
+   },
+   "note": ""
+  },
+  {
+   "label": "Suspense and Miscellaneous",
+   "variable": null,
+   "values": {
+    "2020-21": -209.39,
+    "2021-22": 1246.84,
+    "2022-23": 517.93,
+    "2023-24": 40.33,
+    "2024-25": 4.67
+   },
+   "note": ""
+  },
+  {
+   "label": "Remittances",
+   "variable": null,
+   "values": {
+    "2020-21": -64.38,
+    "2021-22": 111.59,
+    "2022-23": -159.55,
+    "2023-24": 126.29,
+    "2024-25": 183.97
+   },
+   "note": ""
+  },
+  {
+   "label": "Reserve Fund",
+   "variable": null,
+   "values": {
+    "2020-21": -5.11,
+    "2021-22": -743.3,
+    "2022-23": -39.18,
+    "2023-24": 345.05,
+    "2024-25": 599.67
+   },
+   "note": ""
+  },
+  {
+   "label": "0 Overall Deficit",
+   "variable": null,
+   "values": {
+    "2020-21": 6396.15,
+    "2021-22": 6011.47,
+    "2022-23": 13413.01,
+    "2023-24": 9210.13,
+    "2024-25": 11155.54
+   },
+   "note": ""
+  },
+  {
+   "label": "Increase (-) / Decrease (+) in cash balances",
+   "variable": null,
+   "values": {
+    "2020-21": -696.06,
+    "2021-22": -766.62,
+    "2022-23": -1033.18,
+    "2023-24": 2055.6,
+    "2024-25": 1455.51
+   },
+   "note": ""
+  },
+  {
+   "label": "Gross Fiscal Deficit",
+   "variable": "fiscal_deficit",
+   "values": {
+    "2020-21": 5700.09,
+    "2021-22": 5244.85,
+    "2022-23": 12379.83,
+    "2023-24": 11265.73,
+    "2024-25": 12611.05
+   },
+   "note": ""
+  }
+ ],
+ "status": "draft",
+ "verified_by": "",
+ "verified_at": "",
+ "notes": "",
+ "prefilled_from": "rule-based pipeline output (UNVERIFIED)"
+}

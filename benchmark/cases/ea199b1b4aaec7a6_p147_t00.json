@@ -1,0 +1,56 @@
+{
+ "case_id": "ea199b1b4aaec7a6_p147_t00",
+ "document_file": "Himachal Pradesh.pdf",
+ "document_sha256": "ea199b1b4aaec7a6054ce36aa5e52b96572ea3fa8c2c78ea33a28cd8ea8208b3",
+ "page": 147,
+ "table_id": "p147_t00",
+ "caption": null,
+ "snapshot": "data/processed/ea199b1b4aaec7a6/snapshots/p147_t00.png",
+ "gold_unit": "INR crore",
+ "rows": [
+  {
+   "label": "Expenditure on transport subsidy",
+   "variable": null,
+   "values": {
+    "2011-12": 90.0,
+    "2012-13": 97.4,
+    "2013-14": 120.0,
+    "2014-15": 135.0,
+    "2015-16": 235.0,
+    "2016-17": 160.0
+   },
+   "note": ""
+  },
+  {
+   "label": "Total Revenue Expenditure of the State",
+   "variable": "revenue_expenditure",
+   "values": {
+    "2011-12": 13897.97,
+    "2012-13": 16174.25,
+    "2013-14": 17352.49,
+    "2014-15": 19787.05,
+    "2015-16": 22302.81,
+    "2016-17": 25344.22
+   },
+   "note": ""
+  },
+  {
+   "label": "Percentage of Col. 2 to Col.3",
+   "variable": null,
+   "values": {
+    "2011-12": 0.64,
+    "2012-13": 0.6,
+    "2013-14": 0.69,
+    "2014-15": 0.68,
+    "2015-16": 1.05,
+    "2016-17": 0.63
+   },
+   "note": ""
+  }
+ ],
+ "status": "draft",
+ "verified_by": "",
+ "verified_at": "",
+ "notes": "",
+ "prefilled_from": "rule-based pipeline output (UNVERIFIED)"
+}

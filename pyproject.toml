@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "statefin"
+version = "0.2.0"
+description = "Auditable extraction of Indian state-government finance variables from official PDFs"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "pymupdf>=1.24",   # text + table extraction (find_tables) + page snapshots
+    "pyyaml>=6.0",     # configuration
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7"]
+# Phase 1 detects pages that need OCR but does not run OCR.
+ocr = ["ocrmypdf>=16"]
+
+[project.scripts]
+statefin = "statefin.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+filterwarnings = ["ignore:builtin type .* has no __module__ attribute:DeprecationWarning"]
+markers = [
+    "real_pdf: regression tests against the real Himachal Pradesh SFAR 2024-25 (skipped if the PDF is absent)",
+]

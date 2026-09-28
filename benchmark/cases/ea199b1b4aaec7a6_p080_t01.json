@@ -1,0 +1,50 @@
+{
+ "case_id": "ea199b1b4aaec7a6_p080_t01",
+ "document_file": "Himachal Pradesh.pdf",
+ "document_sha256": "ea199b1b4aaec7a6054ce36aa5e52b96572ea3fa8c2c78ea33a28cd8ea8208b3",
+ "page": 80,
+ "table_id": "p080_t01",
+ "caption": "Table 6.9: Total revenue expenditure of Himachal Pradesh (Rs. core)",
+ "snapshot": "data/processed/ea199b1b4aaec7a6/snapshots/p080_t01.png",
+ "gold_unit": "INR crore",
+ "rows": [
+  {
+   "label": "Revenue Expenditure (Rs. crore)",
+   "variable": "revenue_expenditure",
+   "values": {
+    "2005-06": 6466.15,
+    "2006-07": 7644.11,
+    "2007-08": 8291.75,
+    "2008-09": 9438.13,
+    "2009-10": 11151.01,
+    "2010-11": 13946.05,
+    "2011-12": 13897.97,
+    "2012-13": 16174.25,
+    "2013-14": 17352.49,
+    "2014-15": 19787.05
+   },
+   "note": ""
+  },
+  {
+   "label": "Per cent growth over the previous year",
+   "variable": null,
+   "values": {
+    "2006-07": 18.21,
+    "2007-08": 8.47,
+    "2008-09": 13.82,
+    "2009-10": 18.14,
+    "2010-11": 25.06,
+    "2011-12": -0.01,
+    "2012-13": 16.37,
+    "2013-14": 7.28,
+    "2014-15": 14.03
+   },
+   "note": ""
+  }
+ ],
+ "status": "draft",
+ "verified_by": "",
+ "verified_at": "",
+ "notes": "",
+ "prefilled_from": "rule-based pipeline output (UNVERIFIED)"
+}

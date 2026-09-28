@@ -1,0 +1,77 @@
+{
+ "case_id": "ea199b1b4aaec7a6_p014_t00",
+ "document_file": "Himachal Pradesh.pdf",
+ "document_sha256": "ea199b1b4aaec7a6054ce36aa5e52b96572ea3fa8c2c78ea33a28cd8ea8208b3",
+ "page": 14,
+ "table_id": "p014_t00",
+ "caption": null,
+ "snapshot": "data/processed/ea199b1b4aaec7a6/snapshots/p014_t00.png",
+ "gold_unit": "percent",
+ "rows": [
+  {
+   "label": "RD Scenario I 2",
+   "variable": null,
+   "values": {
+    "2020-21": 26718.0,
+    "2021-22": 30088.0,
+    "2022-23": 33877.0,
+    "2023-24": 38137.0,
+    "2024-25": 42926.0
+   },
+   "note": ""
+  },
+  {
+   "label": "RD Scenario II 3",
+   "variable": null,
+   "values": {
+    "2020-21": 6547.0,
+    "2021-22": 9917.0,
+    "2022-23": 13706.0,
+    "2023-24": 17966.0,
+    "2024-25": 22755.0
+   },
+   "note": ""
+  },
+  {
+   "label": "Estimated GSDP at current prices 4",
+   "variable": null,
+   "values": {
+    "2020-21": 193507.0,
+    "2021-22": 218662.0,
+    "2022-23": 247088.0,
+    "2023-24": 279210.0,
+    "2024-25": 315507.0
+   },
+   "note": ""
+  },
+  {
+   "label": "Percentage of Col.2 to 4 5",
+   "variable": null,
+   "values": {
+    "2020-21": 13.81,
+    "2021-22": 13.76,
+    "2022-23": 13.71,
+    "2023-24": 13.66,
+    "2024-25": 13.6
+   },
+   "note": ""
+  },
+  {
+   "label": "Percentage of Col.3 to 4 6",
+   "variable": null,
+   "values": {
+    "2020-21": 3.38,
+    "2021-22": 4.53,
+    "2022-23": 5.54,
+    "2023-24": 6.43,
+    "2024-25": 7.21
+   },
+   "note": ""
+  }
+ ],
+ "status": "draft",
+ "verified_by": "",
+ "verified_at": "",
+ "notes": "",
+ "prefilled_from": "rule-based pipeline output (UNVERIFIED)"
+}

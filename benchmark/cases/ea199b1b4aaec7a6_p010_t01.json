@@ -1,0 +1,62 @@
+{
+ "case_id": "ea199b1b4aaec7a6_p010_t01",
+ "document_file": "Himachal Pradesh.pdf",
+ "document_sha256": "ea199b1b4aaec7a6054ce36aa5e52b96572ea3fa8c2c78ea33a28cd8ea8208b3",
+ "page": 10,
+ "table_id": "p010_t01",
+ "caption": null,
+ "snapshot": "data/processed/ea199b1b4aaec7a6/snapshots/p010_t01.png",
+ "gold_unit": null,
+ "rows": [
+  {
+   "label": "Forestry",
+   "variable": null,
+   "values": {
+    "2015-16": 34.47,
+    "2016-17": 18.5
+   },
+   "note": ""
+  },
+  {
+   "label": "Power",
+   "variable": null,
+   "values": {
+    "2015-16": 923.68,
+    "2016-17": 650.93
+   },
+   "note": ""
+  },
+  {
+   "label": "Mining",
+   "variable": null,
+   "values": {
+    "2015-16": 155.08,
+    "2016-17": 176.22
+   },
+   "note": ""
+  },
+  {
+   "label": "Others",
+   "variable": null,
+   "values": {
+    "2015-16": 723.92,
+    "2016-17": 871.59
+   },
+   "note": ""
+  },
+  {
+   "label": "Total",
+   "variable": null,
+   "values": {
+    "2015-16": 1837.15,
+    "2016-17": 1717.24
+   },
+   "note": ""
+  }
+ ],
+ "status": "draft",
+ "verified_by": "",
+ "verified_at": "",
+ "notes": "",
+ "prefilled_from": "rule-based pipeline output (UNVERIFIED)"
+}

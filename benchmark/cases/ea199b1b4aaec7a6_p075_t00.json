@@ -1,0 +1,74 @@
+{
+ "case_id": "ea199b1b4aaec7a6_p075_t00",
+ "document_file": "Himachal Pradesh.pdf",
+ "document_sha256": "ea199b1b4aaec7a6054ce36aa5e52b96572ea3fa8c2c78ea33a28cd8ea8208b3",
+ "page": 75,
+ "table_id": "p075_t00",
+ "caption": "TABLE 6.4: EXPENDITURE ON SALARIES AND PENSIONS (Rs. Crore)",
+ "snapshot": "data/processed/ea199b1b4aaec7a6/snapshots/p075_t00.png",
+ "gold_unit": "INR crore",
+ "rows": [
+  {
+   "label": "Expenditure on Salaries",
+   "variable": "salary_wages",
+   "values": {
+    "2005-06": 2362.96,
+    "2006-07": 2683.33,
+    "2007-08": 3014.87,
+    "2008-09": 3314.89,
+    "2009-10": 3973.03,
+    "2010-11": 5166.39,
+    "2011-12": 5305.51,
+    "2012-13": 6129.73,
+    "2013-14": 6278.39,
+    "2014-15": 6966.54,
+    "2015-16": 6806.84,
+    "2016-17": 8106.91
+   },
+   "note": ""
+  },
+  {
+   "label": "Expenditure on Pensions",
+   "variable": "pension_expenditure",
+   "values": {
+    "2005-06": 669.76,
+    "2006-07": 911.77,
+    "2007-08": 949.32,
+    "2008-09": 1153.92,
+    "2009-10": 1348.46,
+    "2010-11": 2105.39,
+    "2011-12": 2216.81,
+    "2012-13": 2746.84,
+    "2013-14": 2855.08,
+    "2014-15": 2914.49,
+    "2015-16": 3836.44,
+    "2016-17": 4114.47
+   },
+   "note": ""
+  },
+  {
+   "label": "Total",
+   "variable": null,
+   "values": {
+    "2005-06": 3032.72,
+    "2006-07": 3595.1,
+    "2007-08": 3964.19,
+    "2008-09": 4468.81,
+    "2009-10": 5321.49,
+    "2010-11": 7271.78,
+    "2011-12": 7522.32,
+    "2012-13": 8876.57,
+    "2013-14": 9133.47,
+    "2014-15": 9881.03,
+    "2015-16": 10643.28,
+    "2016-17": 12221.38
+   },
+   "note": ""
+  }
+ ],
+ "status": "draft",
+ "verified_by": "",
+ "verified_at": "",
+ "notes": "",
+ "prefilled_from": "rule-based pipeline output (UNVERIFIED)"
+}

@@ -1,0 +1,77 @@
+{
+ "case_id": "270fa0ea20dc8646_p038_t01",
+ "document_file": "HP-Report-No-2-of-2026-SFAR-2024-25-English-06a995015d08ee1.68791217.pdf",
+ "document_sha256": "270fa0ea20dc8646b5f4c7703d030d66af12dd224e19294d04c7f6b6726ab59d",
+ "page": 38,
+ "table_id": "p038_t01",
+ "caption": "Table 1.14: Total expenditure and its composition",
+ "snapshot": "data/processed/270fa0ea20dc8646/snapshots/p038_t01.png",
+ "gold_unit": "INR crore",
+ "rows": [
+  {
+   "label": "Total Expenditure (TE)",
+   "variable": null,
+   "values": {
+    "2020-21": 39164.25,
+    "2021-22": 42601.89,
+    "2022-23": 50564.72,
+    "2023-24": 50468.37,
+    "2024-25": 53668.04
+   },
+   "note": ""
+  },
+  {
+   "label": "Revenue Expenditure (RE)",
+   "variable": "revenue_expenditure",
+   "values": {
+    "2020-21": 33534.93,
+    "2021-22": 36194.54,
+    "2022-23": 44425.26,
+    "2023-24": 44731.63,
+    "2024-25": 47676.96
+   },
+   "note": ""
+  },
+  {
+   "label": "Capital Expenditure (CE)",
+   "variable": "capital_expenditure",
+   "values": {
+    "2020-21": 5309.21,
+    "2021-22": 6029.38,
+    "2022-23": 6028.89,
+    "2023-24": 5629.79,
+    "2024-25": 5956.83
+   },
+   "note": ""
+  },
+  {
+   "label": "Loans and Advances",
+   "variable": null,
+   "values": {
+    "2020-21": 320.11,
+    "2021-22": 377.97,
+    "2022-23": 110.57,
+    "2023-24": 106.95,
+    "2024-25": 34.25
+   },
+   "note": ""
+  },
+  {
+   "label": "Appropriation to Contingency Fund",
+   "variable": null,
+   "values": {
+    "2020-21": 0.0,
+    "2021-22": 0.0,
+    "2022-23": 0.0,
+    "2023-24": 0.0,
+    "2024-25": 0.0
+   },
+   "note": ""
+  }
+ ],
+ "status": "draft",
+ "verified_by": "",
+ "verified_at": "",
+ "notes": "",
+ "prefilled_from": "rule-based pipeline output (UNVERIFIED)"
+}

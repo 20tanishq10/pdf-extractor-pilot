@@ -1,0 +1,95 @@
+{
+ "case_id": "ea199b1b4aaec7a6_p012_t01",
+ "document_file": "Himachal Pradesh.pdf",
+ "document_sha256": "ea199b1b4aaec7a6054ce36aa5e52b96572ea3fa8c2c78ea33a28cd8ea8208b3",
+ "page": 12,
+ "table_id": "p012_t01",
+ "caption": null,
+ "snapshot": "data/processed/ea199b1b4aaec7a6/snapshots/p012_t01.png",
+ "gold_unit": null,
+ "rows": [
+  {
+   "label": "Revenue Deficit/surplus (- / +) BE",
+   "variable": null,
+   "values": {
+    "2006-07": -3.9,
+    "2007-08": -3.42,
+    "2008-09": 0.74,
+    "2009-10": 2.45,
+    "2010-11": -4.36,
+    "2011-12": 0.36
+   },
+   "note": ""
+  },
+  {
+   "label": "Revenue Deficit/surplus (- / +) RE",
+   "variable": null,
+   "values": {
+    "2006-07": -0.78,
+    "2007-08": -0.57,
+    "2008-09": 3.29,
+    "2009-10": -1.47,
+    "2010-11": -1.25,
+    "2011-12": 3.17
+   },
+   "note": ""
+  },
+  {
+   "label": "Revenue Deficit/surplus (- / +) Actual",
+   "variable": null,
+   "values": {
+    "2006-07": 1.33,
+    "2007-08": 9.3,
+    "2008-09": -1.4,
+    "2009-10": -7.71,
+    "2010-11": 4.21,
+    "2011-12": 4.43
+   },
+   "note": ""
+  },
+  {
+   "label": "Fiscal Deficit BE",
+   "variable": null,
+   "values": {
+    "2006-07": 3.9,
+    "2007-08": 4.06,
+    "2008-09": 5.37,
+    "2009-10": 3.54,
+    "2010-11": 5.08,
+    "2011-12": 2.7
+   },
+   "note": ""
+  },
+  {
+   "label": "Fiscal Deficit RE",
+   "variable": null,
+   "values": {
+    "2006-07": 3.79,
+    "2007-08": 4.18,
+    "2008-09": 4.44,
+    "2009-10": 5.42,
+    "2010-11": 3.47,
+    "2011-12": 2.92
+   },
+   "note": ""
+  },
+  {
+   "label": "Fiscal Deficit Actual",
+   "variable": null,
+   "values": {
+    "2006-07": 3.39,
+    "2007-08": 1.82,
+    "2008-09": 6.71,
+    "2009-10": 6.71,
+    "2010-11": 5.26,
+    "2011-12": 2.87
+   },
+   "note": ""
+  }
+ ],
+ "status": "draft",
+ "verified_by": "",
+ "verified_at": "",
+ "notes": "",
+ "prefilled_from": "rule-based pipeline output (UNVERIFIED)"
+}

@@ -1,0 +1,39 @@
+# States and Union Territories with legislatures (i.e. with their own Finance Accounts).
+# `code` is an internal short identifier, not an ISO code.
+# `first_fy` is the first financial year for which the entity has its own accounts.
+# `breaks` are reorganisations: the panel flags a structural break starting in that year
+# rather than silently splicing the series.
+
+states:
+  - {name: Andhra Pradesh, code: AP, breaks: [{fy: 2014-15, reason: "Telangana carved out (2 June 2014)"}], aliases: [], notes: "Bifurcated 2 June 2014; figures up to 2013-14 refer to undivided Andhra Pradesh."}
+  - {name: Arunachal Pradesh, code: AR, aliases: []}
+  - {name: Assam, code: AS, aliases: []}
+  - {name: Bihar, code: BR, breaks: [{fy: 2000-01, reason: "Jharkhand carved out (15 Nov 2000)"}], aliases: [], notes: "Jharkhand carved out 15 Nov 2000."}
+  - {name: Chhattisgarh, code: CG, aliases: [Chattisgarh], first_fy: 2000-01, notes: "Formed 1 Nov 2000 from Madhya Pradesh; 2000-01 is a part year."}
+  - {name: Goa, code: GA, aliases: []}
+  - {name: Gujarat, code: GJ, aliases: []}
+  - {name: Haryana, code: HR, aliases: []}
+  - {name: Himachal Pradesh, code: HP, aliases: []}
+  - {name: Jharkhand, code: JH, aliases: [], first_fy: 2000-01, notes: "Formed 15 Nov 2000 from Bihar; 2000-01 is a part year."}
+  - {name: Karnataka, code: KA, aliases: []}
+  - {name: Kerala, code: KL, aliases: []}
+  - {name: Madhya Pradesh, code: MP, breaks: [{fy: 2000-01, reason: "Chhattisgarh carved out (1 Nov 2000)"}], aliases: [], notes: "Chhattisgarh carved out 1 Nov 2000."}
+  - {name: Maharashtra, code: MH, aliases: []}
+  - {name: Manipur, code: MN, aliases: []}
+  - {name: Meghalaya, code: ML, aliases: []}
+  - {name: Mizoram, code: MZ, aliases: []}
+  - {name: Nagaland, code: NL, aliases: []}
+  - {name: Odisha, code: OD, aliases: [Orissa]}
+  - {name: Punjab, code: PB, aliases: []}
+  - {name: Rajasthan, code: RJ, aliases: []}
+  - {name: Sikkim, code: SK, aliases: []}
+  - {name: Tamil Nadu, code: TN, aliases: []}
+  - {name: Telangana, code: TG, aliases: [], first_fy: 2014-15, notes: "Formed 2 June 2014; 2014-15 accounts cover a part year."}
+  - {name: Tripura, code: TR, aliases: []}
+  - {name: Uttar Pradesh, code: UP, breaks: [{fy: 2000-01, reason: "Uttarakhand carved out (9 Nov 2000)"}], aliases: [], notes: "Uttarakhand carved out 9 Nov 2000."}
+  - {name: Uttarakhand, code: UK, aliases: [Uttaranchal], first_fy: 2000-01, notes: "Formed 9 Nov 2000 from Uttar Pradesh."}
+  - {name: West Bengal, code: WB, aliases: []}
+  # Union Territories with legislature
+  - {name: Delhi, code: DL, aliases: [NCT of Delhi, National Capital Territory of Delhi, Government of NCT of Delhi], kind: ut_with_legislature}
+  - {name: Puducherry, code: PY, aliases: [Pondicherry], kind: ut_with_legislature}
+  - {name: Jammu and Kashmir, code: JK, breaks: [{fy: 2019-20, reason: "Became a Union Territory with legislature; Ladakh separated (31 Oct 2019)"}], aliases: [Jammu & Kashmir], notes: "State until 30 Oct 2019; UT with legislature from 31 Oct 2019 (Ladakh separated)."}

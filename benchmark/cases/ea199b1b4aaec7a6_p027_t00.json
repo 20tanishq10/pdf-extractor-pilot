@@ -1,0 +1,50 @@
+{
+ "case_id": "ea199b1b4aaec7a6_p027_t00",
+ "document_file": "Himachal Pradesh.pdf",
+ "document_sha256": "ea199b1b4aaec7a6054ce36aa5e52b96572ea3fa8c2c78ea33a28cd8ea8208b3",
+ "page": 27,
+ "table_id": "p027_t00",
+ "caption": "Table 2.1: Share of Manufacturing sector in the GSDP of Himachal Pradesh",
+ "snapshot": "data/processed/ea199b1b4aaec7a6/snapshots/p027_t00.png",
+ "gold_unit": "INR crore",
+ "rows": [
+  {
+   "label": "GSDP (Rs. crore)",
+   "variable": "gsdp",
+   "values": {
+    "2004-05": 24076.58,
+    "2008-09": 41483.1,
+    "2011-12": 66448.35,
+    "2014-15": 95586.71
+   },
+   "note": ""
+  },
+  {
+   "label": "Contribution of Manufacturing sector (Rs. crore)",
+   "variable": null,
+   "values": {
+    "2004-05": 2772.1,
+    "2008-09": 6612.9,
+    "2011-12": 13327.46,
+    "2014-15": 17448.08
+   },
+   "note": ""
+  },
+  {
+   "label": "Percentage of Column 3 to Column 2",
+   "variable": null,
+   "values": {
+    "2004-05": 11.51,
+    "2008-09": 15.94,
+    "2011-12": 20.06,
+    "2014-15": 18.25
+   },
+   "note": ""
+  }
+ ],
+ "status": "draft",
+ "verified_by": "",
+ "verified_at": "",
+ "notes": "",
+ "prefilled_from": "rule-based pipeline output (UNVERIFIED)"
+}

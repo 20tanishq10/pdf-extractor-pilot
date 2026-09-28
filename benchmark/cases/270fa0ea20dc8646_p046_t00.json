@@ -1,0 +1,161 @@
+{
+ "case_id": "270fa0ea20dc8646_p046_t00",
+ "document_file": "HP-Report-No-2-of-2026-SFAR-2024-25-English-06a995015d08ee1.68791217.pdf",
+ "document_sha256": "270fa0ea20dc8646b5f4c7703d030d66af12dd224e19294d04c7f6b6726ab59d",
+ "page": 46,
+ "table_id": "p046_t00",
+ "caption": "Table 1.23: Financial assistance to Local Bodies and other institutions",
+ "snapshot": "data/processed/270fa0ea20dc8646/snapshots/p046_t00.png",
+ "gold_unit": "INR crore",
+ "rows": [
+  {
+   "label": "Municipal Corporations and Municipalities",
+   "variable": null,
+   "values": {
+    "2020-21": 814.58,
+    "2021-22": 800.71,
+    "2022-23": 903.04,
+    "2023-24": 970.76,
+    "2024-25": 653.71
+   },
+   "note": ""
+  },
+  {
+   "label": "Panchayati Raj Institutions",
+   "variable": null,
+   "values": {
+    "2020-21": 1176.07,
+    "2021-22": 1148.28,
+    "2022-23": 1753.44,
+    "2023-24": 1193.24,
+    "2024-25": 2406.93
+   },
+   "note": ""
+  },
+  {
+   "label": "Total (A) (B) Others",
+   "variable": null,
+   "values": {
+    "2020-21": 1990.65,
+    "2021-22": 1948.99,
+    "2022-23": 2656.48,
+    "2023-24": 2164.0,
+    "2024-25": 3060.64
+   },
+   "note": ""
+  },
+  {
+   "label": "Educational Institutions (Aided Schools, Aided Colleges, Universities, etc.)",
+   "variable": null,
+   "values": {
+    "2020-21": 944.59,
+    "2021-22": 1031.74,
+    "2022-23": 1157.21,
+    "2023-24": 1208.67,
+    "2024-25": 1531.41
+   },
+   "note": ""
+  },
+  {
+   "label": "Development Authorities",
+   "variable": null,
+   "values": {
+    "2020-21": 238.37,
+    "2021-22": 331.69,
+    "2022-23": 330.42,
+    "2023-24": 337.65,
+    "2024-25": 388.97
+   },
+   "note": ""
+  },
+  {
+   "label": "Hospitals and Other Charitable Institutions",
+   "variable": null,
+   "values": {
+    "2020-21": 458.23,
+    "2021-22": 673.6,
+    "2022-23": 671.32,
+    "2023-24": 446.7,
+    "2024-25": 532.71
+   },
+   "note": ""
+  },
+  {
+   "label": "Other Institutions",
+   "variable": null,
+   "values": {
+    "2020-21": 931.27,
+    "2021-22": 994.78,
+    "2022-23": 1031.51,
+    "2023-24": 935.19,
+    "2024-25": 717.29
+   },
+   "note": ""
+  },
+  {
+   "label": "Total (B)",
+   "variable": null,
+   "values": {
+    "2020-21": 2572.46,
+    "2021-22": 3031.81,
+    "2022-23": 3190.46,
+    "2023-24": 2928.21,
+    "2024-25": 3170.38
+   },
+   "note": ""
+  },
+  {
+   "label": "Total (A+B)",
+   "variable": null,
+   "values": {
+    "2020-21": 4563.11,
+    "2021-22": 4980.8,
+    "2022-23": 5846.94,
+    "2023-24": 5092.21,
+    "2024-25": 6231.02
+   },
+   "note": ""
+  },
+  {
+   "label": "Of which, total GIA for creation of Capital assets",
+   "variable": null,
+   "values": {
+    "2020-21": 1039.73,
+    "2021-22": 833.26,
+    "2022-23": 1376.62,
+    "2023-24": 911.05,
+    "2024-25": 1183.2
+   },
+   "note": ""
+  },
+  {
+   "label": "Revenue expenditure",
+   "variable": "revenue_expenditure",
+   "values": {
+    "2020-21": 33534.93,
+    "2021-22": 36194.54,
+    "2022-23": 44425.26,
+    "2023-24": 44731.63,
+    "2024-25": 47676.96
+   },
+   "note": ""
+  },
+  {
+   "label": "Financial assistance as percentage of Revenue expenditure",
+   "variable": null,
+   "values": {
+    "2020-21": 13.61,
+    "2021-22": 13.76,
+    "2022-23": 13.16,
+    "2023-24": 11.38,
+    "2024-25": 13.07
+   },
+   "note": ""
+  }
+ ],
+ "status": "draft",
+ "verified_by": "",
+ "verified_at": "",
+ "notes": "",
+ "prefilled_from": "rule-based pipeline output (UNVERIFIED)"
+}

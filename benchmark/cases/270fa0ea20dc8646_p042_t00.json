@@ -1,0 +1,77 @@
+{
+ "case_id": "270fa0ea20dc8646_p042_t00",
+ "document_file": "HP-Report-No-2-of-2026-SFAR-2024-25-English-06a995015d08ee1.68791217.pdf",
+ "document_sha256": "270fa0ea20dc8646b5f4c7703d030d66af12dd224e19294d04c7f6b6726ab59d",
+ "page": 42,
+ "table_id": "p042_t00",
+ "caption": "Table 1.18: Components of Committed Expenditure",
+ "snapshot": "data/processed/270fa0ea20dc8646/snapshots/p042_t00.png",
+ "gold_unit": "INR crore",
+ "rows": [
+  {
+   "label": "Salaries & Wages4",
+   "variable": "salary_wages",
+   "values": {
+    "2020-21": 13411.41,
+    "2021-22": 13880.31,
+    "2022-23": 17587.18,
+    "2023-24": 17124.03,
+    "2024-25": 17461.5
+   },
+   "note": ""
+  },
+  {
+   "label": "Expenditure on Pensions",
+   "variable": "pension_expenditure",
+   "values": {
+    "2020-21": 6088.39,
+    "2021-22": 6398.91,
+    "2022-23": 9283.87,
+    "2023-24": 9212.64,
+    "2024-25": 9543.85
+   },
+   "note": ""
+  },
+  {
+   "label": "Interest Payments",
+   "variable": "interest_payments",
+   "values": {
+    "2020-21": 4472.45,
+    "2021-22": 4640.79,
+    "2022-23": 4828.64,
+    "2023-24": 5648.37,
+    "2024-25": 6260.93
+   },
+   "note": ""
+  },
+  {
+   "label": "Total",
+   "variable": null,
+   "values": {
+    "2020-21": 23972.25,
+    "2021-22": 24920.01,
+    "2022-23": 31699.69,
+    "2023-24": 31985.04,
+    "2024-25": 33266.28
+   },
+   "note": ""
+  },
+  {
+   "label": "Committed Expenditure as percentage of Revenue Expenditure",
+   "variable": null,
+   "values": {
+    "2020-21": 71.48,
+    "2021-22": 68.85,
+    "2022-23": 71.36,
+    "2023-24": 71.5,
+    "2024-25": 69.77
+   },
+   "note": ""
+  }
+ ],
+ "status": "draft",
+ "verified_by": "",
+ "verified_at": "",
+ "notes": "",
+ "prefilled_from": "rule-based pipeline output (UNVERIFIED)"
+}

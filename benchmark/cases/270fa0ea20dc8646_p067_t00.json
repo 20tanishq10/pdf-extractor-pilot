@@ -1,0 +1,255 @@
+{
+ "case_id": "270fa0ea20dc8646_p067_t00",
+ "document_file": "HP-Report-No-2-of-2026-SFAR-2024-25-English-06a995015d08ee1.68791217.pdf",
+ "document_sha256": "270fa0ea20dc8646b5f4c7703d030d66af12dd224e19294d04c7f6b6726ab59d",
+ "page": 67,
+ "table_id": "p067_t00",
+ "caption": "Table 1.35: Trends in Debt Sustainability Indicators (continued)",
+ "snapshot": "data/processed/270fa0ea20dc8646/snapshots/p067_t00.png",
+ "gold_unit": "INR crore",
+ "rows": [
+  {
+   "label": "5-10 years",
+   "variable": null,
+   "values": {
+    "2021-22": 25929.71,
+    "2022-23": 33263.24,
+    "2023-24": 34291.31,
+    "2024-25": 36402.21
+   },
+   "note": ""
+  },
+  {
+   "label": "Over 10 years",
+   "variable": null,
+   "values": {
+    "2021-22": 7691.18,
+    "2022-23": 16567.93,
+    "2023-24": 21419.89,
+    "2024-25": 23211.53
+   },
+   "note": ""
+  },
+  {
+   "label": "Repayment to Gross Borrowings (per cent)",
+   "variable": null,
+   "values": {
+    "2020-21": 91.04,
+    "2021-22": 99.93,
+    "2022-23": 74.84,
+    "2023-24": 86.64,
+    "2024-25": 87.44
+   },
+   "note": ""
+  },
+  {
+   "label": "Net borrowings available as percentage of Gross Borrowings",
+   "variable": null,
+   "values": {
+    "2020-21": 8.96,
+    "2021-22": 0.07,
+    "2022-23": 25.16,
+    "2023-24": 13.36,
+    "2024-25": 12.56
+   },
+   "note": ""
+  },
+  {
+   "label": "Interest payments on Overall Debt",
+   "variable": null,
+   "values": {
+    "2020-21": 4472.45,
+    "2021-22": 4640.79,
+    "2022-23": 4828.64,
+    "2023-24": 5648.37,
+    "2024-25": 6260.93
+   },
+   "note": ""
+  },
+  {
+   "label": "Effective rate of interest on Overall Debt (per cent)",
+   "variable": null,
+   "values": {
+    "2020-21": 7.4,
+    "2021-22": 7.24,
+    "2022-23": 6.72,
+    "2023-24": 6.82,
+    "2024-25": 6.76
+   },
+   "note": ""
+  },
+  {
+   "label": "Interest payment to Revenue receipts (per cent)",
+   "variable": null,
+   "values": {
+    "2020-21": 13.38,
+    "2021-22": 12.44,
+    "2022-23": 12.68,
+    "2023-24": 14.42,
+    "2024-25": 15.32
+   },
+   "note": ""
+  },
+  {
+   "label": "Revenue Deficit (-)/Surplus (+)",
+   "variable": "revenue_deficit_surplus",
+   "values": {
+    "2020-21": -96.66,
+    "2021-22": 1114.76,
+    "2022-23": -6335.76,
+    "2023-24": -5558.59,
+    "2024-25": -6804.61
+   },
+   "note": ""
+  },
+  {
+   "label": "Primary Revenue Balance (PRB)",
+   "variable": null,
+   "values": {
+    "2020-21": 4375.52,
+    "2021-22": 5755.55,
+    "2022-23": -1507.12,
+    "2023-24": 89.78,
+    "2024-25": -543.67
+   },
+   "note": ""
+  },
+  {
+   "label": "Primary Balance (PB)",
+   "variable": null,
+   "values": {
+    "2020-21": -1228.0,
+    "2021-22": -604.0,
+    "2022-23": -7551.0,
+    "2023-24": -5617.0,
+    "2024-25": -6350.0
+   },
+   "note": ""
+  },
+  {
+   "label": "PB/GSDP (per cent)",
+   "variable": null,
+   "values": {
+    "2020-21": -0.81,
+    "2021-22": -0.35,
+    "2022-23": -3.94,
+    "2023-24": -2.67,
+    "2024-25": -2.74
+   },
+   "note": ""
+  },
+  {
+   "label": "Difference between RoI and effective rate of interest on overall liability",
+   "variable": null,
+   "values": {
+    "2020-21": -4.1,
+    "2021-22": -6.0,
+    "2022-23": -6.53,
+    "2023-24": -6.23,
+    "2024-25": -1.52
+   },
+   "note": ""
+  },
+  {
+   "label": "Liquidity management (use of financial accommodation instrument available with RBI) (in number of occasions)",
+   "variable": null,
+   "values": {
+    "2020-21": 63.0,
+    "2021-22": 16.0,
+    "2022-23": 70.0,
+    "2023-24": 41.0,
+    "2024-25": 162.0
+   },
+   "note": ""
+  },
+  {
+   "label": "Debt Stabilisation (Quantum spread + Primary balance)",
+   "variable": null,
+   "values": {
+    "2020-21": -875.54,
+    "2021-22": -3435.61,
+    "2022-23": 1979.76,
+    "2023-24": -1969.05,
+    "2024-25": -1187.23
+   },
+   "note": ""
+  },
+  {
+   "label": "GSDP (in constant terms)",
+   "variable": null,
+   "values": {
+    "2020-21": 115894.0,
+    "2021-22": 121481.0,
+    "2022-23": 128779.0,
+    "2023-24": 137320.0,
+    "2024-25": 146553.0
+   },
+   "note": ""
+  },
+  {
+   "label": "Real Growth (in constant terms)",
+   "variable": null,
+   "values": {
+    "2020-21": -4.4,
+    "2021-22": 4.57,
+    "2022-23": 6.6,
+    "2023-24": 6.31,
+    "2024-25": 5.73
+   },
+   "note": ""
+  },
+  {
+   "label": "Inflation based on CPI (per cent)",
+   "variable": null,
+   "values": {
+    "2020-21": 4.65,
+    "2021-22": 6.66,
+    "2022-23": 4.5,
+    "2023-24": 5.04,
+    "2024-25": 4.03
+   },
+   "note": ""
+  },
+  {
+   "label": "Effective Rate of interest on Overall Debt",
+   "variable": null,
+   "values": {
+    "2020-21": 7.4,
+    "2021-22": 7.24,
+    "2022-23": 6.72,
+    "2023-24": 6.82,
+    "2024-25": 6.76
+   },
+   "note": ""
+  },
+  {
+   "label": "Real effective rate of interest (Effective rate of interest-Inflation)",
+   "variable": null,
+   "values": {
+    "2020-21": 2.75,
+    "2021-22": 0.58,
+    "2022-23": 2.22,
+    "2023-24": 1.78,
+    "2024-25": 2.73
+   },
+   "note": ""
+  },
+  {
+   "label": "Growth Interest Differential (Real growth-Real effective rate of interest)",
+   "variable": null,
+   "values": {
+    "2020-21": -7.15,
+    "2021-22": 3.99,
+    "2022-23": 4.38,
+    "2023-24": 4.53,
+    "2024-25": 3.0
+   },
+   "note": ""
+  }
+ ],
+ "status": "draft",
+ "verified_by": "",
+ "verified_at": "",
+ "notes": "",
+ "prefilled_from": "rule-based pipeline output (UNVERIFIED)"
+}

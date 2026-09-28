@@ -1,0 +1,29 @@
+{
+ "case_id": "ea199b1b4aaec7a6_p012_t00",
+ "document_file": "Himachal Pradesh.pdf",
+ "document_sha256": "ea199b1b4aaec7a6054ce36aa5e52b96572ea3fa8c2c78ea33a28cd8ea8208b3",
+ "page": 12,
+ "table_id": "p012_t00",
+ "caption": null,
+ "snapshot": "data/processed/ea199b1b4aaec7a6/snapshots/p012_t00.png",
+ "gold_unit": "INR crore",
+ "rows": [
+  {
+   "label": "Projected revenue expenditure",
+   "variable": null,
+   "values": {
+    "2020-21": 41031.0,
+    "2021-22": 46283.0,
+    "2022-23": 52207.0,
+    "2023-24": 58890.0,
+    "2024-25": 66427.0
+   },
+   "note": ""
+  }
+ ],
+ "status": "draft",
+ "verified_by": "",
+ "verified_at": "",
+ "notes": "",
+ "prefilled_from": "rule-based pipeline output (UNVERIFIED)"
+}

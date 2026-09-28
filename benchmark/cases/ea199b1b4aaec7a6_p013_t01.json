@@ -1,0 +1,77 @@
+{
+ "case_id": "ea199b1b4aaec7a6_p013_t01",
+ "document_file": "Himachal Pradesh.pdf",
+ "document_sha256": "ea199b1b4aaec7a6054ce36aa5e52b96572ea3fa8c2c78ea33a28cd8ea8208b3",
+ "page": 13,
+ "table_id": "p013_t01",
+ "caption": null,
+ "snapshot": "data/processed/ea199b1b4aaec7a6/snapshots/p013_t01.png",
+ "gold_unit": "INR crore",
+ "rows": [
+  {
+   "label": "Total revenues",
+   "variable": null,
+   "values": {
+    "2020-21": 14313.0,
+    "2021-22": 16195.0,
+    "2022-23": 18330.0,
+    "2023-24": 20753.0,
+    "2024-25": 23501.0
+   },
+   "note": ""
+  },
+  {
+   "label": "Total revenue expenditure",
+   "variable": "revenue_expenditure",
+   "values": {
+    "2020-21": 41031.0,
+    "2021-22": 46283.0,
+    "2022-23": 52207.0,
+    "2023-24": 58890.0,
+    "2024-25": 66427.0
+   },
+   "note": ""
+  },
+  {
+   "label": "SCENARIO I: Revenue deficit without assuming any central transfers",
+   "variable": null,
+   "values": {
+    "2020-21": 26718.0,
+    "2021-22": 30088.0,
+    "2022-23": 33877.0,
+    "2023-24": 38137.0,
+    "2024-25": 42926.0
+   },
+   "note": ""
+  },
+  {
+   "label": "SCENARIO II: Revenue deficit assuming estimated central transfers for 2018-19 BEs being kept constant at Rs. 20171 crore",
+   "variable": null,
+   "values": {
+    "2020-21": 6547.0,
+    "2021-22": 9917.0,
+    "2022-23": 13706.0,
+    "2023-24": 17966.0,
+    "2024-25": 22755.0
+   },
+   "note": ""
+  },
+  {
+   "label": "SCENARIO III: Revenue deficit with central transfers growing at 10.7 per cent on 2018-19 BEs",
+   "variable": null,
+   "values": {
+    "2020-21": 2000.0,
+    "2021-22": 2725.0,
+    "2022-23": 3586.0,
+    "2023-24": 4605.0,
+    "2024-25": 5806.0
+   },
+   "note": ""
+  }
+ ],
+ "status": "draft",
+ "verified_by": "",
+ "verified_at": "",
+ "notes": "Hint from the pipeline author: 2020-21..2024-25 rows are projections in a 2019 study (scenario table), not actuals. Probably variable null for all rows. Check the snapshot.",
+ "prefilled_from": "rule-based pipeline output (UNVERIFIED)"
+}

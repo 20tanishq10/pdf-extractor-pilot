@@ -1,0 +1,107 @@
+{
+ "case_id": "270fa0ea20dc8646_p028_t00",
+ "document_file": "HP-Report-No-2-of-2026-SFAR-2024-25-English-06a995015d08ee1.68791217.pdf",
+ "document_sha256": "270fa0ea20dc8646b5f4c7703d030d66af12dd224e19294d04c7f6b6726ab59d",
+ "page": 28,
+ "table_id": "p028_t00",
+ "caption": "Table 1.6: State Own Tax Revenue: 2023-24 (Actuals) and 2024-25 (BE, RE, and Actuals)",
+ "snapshot": "data/processed/270fa0ea20dc8646/snapshots/p028_t00.png",
+ "gold_unit": "INR crore",
+ "rows": [
+  {
+   "label": "State Goods and Services Tax (SGST)",
+   "variable": null,
+   "values": {
+    "2023-24": 5339.89,
+    "2024-25": 5816.61
+   },
+   "note": ""
+  },
+  {
+   "label": "State Excise",
+   "variable": null,
+   "values": {
+    "2023-24": 2692.33,
+    "2024-25": 2698.23
+   },
+   "note": ""
+  },
+  {
+   "label": "Taxes on Sales, Trade, etc.",
+   "variable": null,
+   "values": {
+    "2023-24": 1753.73,
+    "2024-25": 1842.3
+   },
+   "note": ""
+  },
+  {
+   "label": "Taxes on Vehicles",
+   "variable": null,
+   "values": {
+    "2023-24": 781.74,
+    "2024-25": 907.04
+   },
+   "note": ""
+  },
+  {
+   "label": "Stamp Duty and Registration Fees",
+   "variable": null,
+   "values": {
+    "2023-24": 440.37,
+    "2024-25": 491.12
+   },
+   "note": ""
+  },
+  {
+   "label": "Taxes and Duties on Electricity",
+   "variable": null,
+   "values": {
+    "2023-24": 369.07,
+    "2024-25": 494.88
+   },
+   "note": ""
+  },
+  {
+   "label": "Land Revenue",
+   "variable": null,
+   "values": {
+    "2023-24": 7.03,
+    "2024-25": 15.59
+   },
+   "note": ""
+  },
+  {
+   "label": "Tax on Goods and Passengers",
+   "variable": null,
+   "values": {
+    "2023-24": 70.88,
+    "2024-25": 76.04
+   },
+   "note": ""
+  },
+  {
+   "label": "Others",
+   "variable": null,
+   "values": {
+    "2023-24": 380.25,
+    "2024-25": 430.19
+   },
+   "note": ""
+  },
+  {
+   "label": "Total",
+   "variable": null,
+   "values": {
+    "2023-24": 11835.29,
+    "2024-25": 12772.0
+   },
+   "note": ""
+  }
+ ],
+ "status": "draft",
+ "verified_by": "",
+ "verified_at": "",
+ "notes": "",
+ "prefilled_from": "rule-based pipeline output (UNVERIFIED)"
+}

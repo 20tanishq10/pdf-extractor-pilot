@@ -1,0 +1,89 @@
+{
+ "case_id": "270fa0ea20dc8646_p034_t00",
+ "document_file": "HP-Report-No-2-of-2026-SFAR-2024-25-English-06a995015d08ee1.68791217.pdf",
+ "document_sha256": "270fa0ea20dc8646b5f4c7703d030d66af12dd224e19294d04c7f6b6726ab59d",
+ "page": 34,
+ "table_id": "p034_t00",
+ "caption": "Table 1.9: Grants-in-aid from Government of India",
+ "snapshot": "data/processed/270fa0ea20dc8646/snapshots/p034_t00.png",
+ "gold_unit": "INR crore",
+ "rows": [
+  {
+   "label": "Centrally Sponsored Schemes",
+   "variable": null,
+   "values": {
+    "2020-21": 4221.29,
+    "2021-22": 5420.75,
+    "2022-23": 4736.66,
+    "2023-24": 5328.69,
+    "2024-25": 6154.58
+   },
+   "note": ""
+  },
+  {
+   "label": "Finance Commission Grants",
+   "variable": null,
+   "values": {
+    "2020-21": 12424.1,
+    "2021-22": 11044.26,
+    "2022-23": 10489.7,
+    "2023-24": 8738.16,
+    "2024-25": 7431.54
+   },
+   "note": ""
+  },
+  {
+   "label": "Other Transfer/Grants to State/ Union Territories with Legislatures",
+   "variable": null,
+   "values": {
+    "2020-21": 1767.19,
+    "2021-22": 1168.31,
+    "2022-23": 1507.57,
+    "2023-24": 875.3,
+    "2024-25": 135.49
+   },
+   "note": ""
+  },
+  {
+   "label": "Total",
+   "variable": null,
+   "values": {
+    "2020-21": 18412.58,
+    "2021-22": 17633.32,
+    "2022-23": 16733.93,
+    "2023-24": 14942.15,
+    "2024-25": 13721.61
+   },
+   "note": ""
+  },
+  {
+   "label": "Percentage increase /decrease over the previous year",
+   "variable": null,
+   "values": {
+    "2020-21": 15.52,
+    "2021-22": -4.23,
+    "2022-23": -5.1,
+    "2023-24": -10.71,
+    "2024-25": -8.17
+   },
+   "note": ""
+  },
+  {
+   "label": "Percentage of GIA to Revenue receipts",
+   "variable": null,
+   "values": {
+    "2020-21": 55.06,
+    "2021-22": 47.26,
+    "2022-23": 43.93,
+    "2023-24": 38.14,
+    "2024-25": 33.57
+   },
+   "note": ""
+  }
+ ],
+ "status": "draft",
+ "verified_by": "",
+ "verified_at": "",
+ "notes": "",
+ "prefilled_from": "rule-based pipeline output (UNVERIFIED)"
+}

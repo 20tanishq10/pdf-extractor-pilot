@@ -1,0 +1,77 @@
+{
+ "case_id": "270fa0ea20dc8646_p037_t00",
+ "document_file": "HP-Report-No-2-of-2026-SFAR-2024-25-English-06a995015d08ee1.68791217.pdf",
+ "document_sha256": "270fa0ea20dc8646b5f4c7703d030d66af12dd224e19294d04c7f6b6726ab59d",
+ "page": 37,
+ "table_id": "p037_t00",
+ "caption": "Table 1.13: 15th FC Projections vis-à-vis actuals",
+ "snapshot": "data/processed/270fa0ea20dc8646/snapshots/p037_t00.png",
+ "gold_unit": "INR crore",
+ "rows": [
+  {
+   "label": "GSDP (2011-12 Series Current price)",
+   "variable": null,
+   "values": {
+    "2020-21": 151905.0,
+    "2021-22": 170376.0,
+    "2022-23": 192026.0,
+    "2023-24": 212169.0,
+    "2024-25": 231690.0
+   },
+   "note": ""
+  },
+  {
+   "label": "Own Revenue Receipts",
+   "variable": null,
+   "values": {
+    "2020-21": 10272.0,
+    "2021-22": 12327.0,
+    "2022-23": 13472.0,
+    "2023-24": 14856.0,
+    "2024-25": 16470.0
+   },
+   "note": ""
+  },
+  {
+   "label": "State's own Tax Revenue",
+   "variable": null,
+   "values": {
+    "2020-21": 8083.0,
+    "2021-22": 9715.0,
+    "2022-23": 10595.0,
+    "2023-24": 11835.0,
+    "2024-25": 12772.0
+   },
+   "note": ""
+  },
+  {
+   "label": "State's own Non- Tax Revenue",
+   "variable": null,
+   "values": {
+    "2020-21": 2188.0,
+    "2021-22": 2612.0,
+    "2022-23": 2876.0,
+    "2023-24": 3021.0,
+    "2024-25": 3698.0
+   },
+   "note": ""
+  },
+  {
+   "label": "State's share in Union Taxes/ Duties",
+   "variable": "union_tax_share",
+   "values": {
+    "2020-21": 4754.0,
+    "2021-22": 7349.0,
+    "2022-23": 7884.0,
+    "2023-24": 9375.0,
+    "2024-25": 10681.0
+   },
+   "note": ""
+  }
+ ],
+ "status": "draft",
+ "verified_by": "",
+ "verified_at": "",
+ "notes": "",
+ "prefilled_from": "rule-based pipeline output (UNVERIFIED)"
+}

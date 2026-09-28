@@ -1,0 +1,13 @@
+.env
+__pycache__/
+*.pyc
+.pytest_cache/
+*.egg-info/
+data/raw/*
+data/processed/*
+data/llm_cache/*
+data/output*/
+!data/**/.gitkeep
+data/statefin.db*
+.DS_Store
+*.tmp

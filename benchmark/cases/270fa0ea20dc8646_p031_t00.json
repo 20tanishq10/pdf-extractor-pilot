@@ -1,0 +1,71 @@
+{
+ "case_id": "270fa0ea20dc8646_p031_t00",
+ "document_file": "HP-Report-No-2-of-2026-SFAR-2024-25-English-06a995015d08ee1.68791217.pdf",
+ "document_sha256": "270fa0ea20dc8646b5f4c7703d030d66af12dd224e19294d04c7f6b6726ab59d",
+ "page": 31,
+ "table_id": "p031_t00",
+ "caption": null,
+ "snapshot": "data/processed/270fa0ea20dc8646/snapshots/p031_t00.png",
+ "gold_unit": null,
+ "rows": [
+  {
+   "label": "Non-Ferrous Mining and Metallurgical Industries",
+   "variable": null,
+   "values": {
+    "2023-24": 331.73,
+    "2024-25": 358.16
+   },
+   "note": ""
+  },
+  {
+   "label": "Dividends and Profits",
+   "variable": null,
+   "values": {
+    "2023-24": 191.17,
+    "2024-25": 191.04
+   },
+   "note": ""
+  },
+  {
+   "label": "Contributions and Recoveries towards Pension and Other Retirement benefits",
+   "variable": null,
+   "values": {
+    "2023-24": 177.23,
+    "2024-25": 130.8
+   },
+   "note": ""
+  },
+  {
+   "label": "Forestry and Wildlife",
+   "variable": null,
+   "values": {
+    "2023-24": 89.95,
+    "2024-25": 85.66
+   },
+   "note": ""
+  },
+  {
+   "label": "Others",
+   "variable": null,
+   "values": {
+    "2023-24": 437.39,
+    "2024-25": 481.36
+   },
+   "note": ""
+  },
+  {
+   "label": "Total",
+   "variable": null,
+   "values": {
+    "2023-24": 3020.88,
+    "2024-25": 3697.5
+   },
+   "note": ""
+  }
+ ],
+ "status": "draft",
+ "verified_by": "",
+ "verified_at": "",
+ "notes": "",
+ "prefilled_from": "rule-based pipeline output (UNVERIFIED)"
+}

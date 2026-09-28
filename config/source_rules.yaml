@@ -1,0 +1,193 @@
+# Document types, source hierarchy, and the textual conventions used to interpret tables.
+# Everything that is a *convention of the documents* (not of a particular state) lives here.
+
+# ---------------------------------------------------------------------------
+# Source hierarchy (lower number = preferred). Conflicting values are never averaged:
+# both observations are kept; the panel takes the value from the unique highest-priority
+# source, or leaves the cell empty if the top priority is tied.
+# ---------------------------------------------------------------------------
+document_types:
+  CAG_FINANCE_ACCOUNTS:
+    priority: 1
+    label: CAG Finance Accounts
+    title_patterns:
+      - 'finance accounts\W+(?:volume|vol\.?)\W*(?:i{1,2}|1|2)\b'     # "Volume - II", "Vol I"
+      - 'finance accounts of the government of'
+      - '\bfa[-_ ]vol'                                                  # file names: FA-Vol-II-2023-24
+    report_year_patterns:
+      - 'finance accounts[^\n]{0,40}?((?:19|20)\d{2}\s*[-–]\s*\d{2,4})'
+    # Confidence multiplier for year columns with no Actual/BE/RE qualifier.
+    unqualified_column_confidence: 1.0
+
+  CAG_SFAR:
+    priority: 2
+    label: CAG State Finances Audit Report
+    title_patterns:
+      - 'state finances audit report'
+      - 'report on state finances'
+    report_year_patterns:
+      - 'state finances audit report[^\n]{0,40}?((?:19|20)\d{2}\s*[-–]\s*\d{2,4})'
+      - 'for the year ended 31 march,? ((?:19|20)\d{2})'
+    unqualified_column_confidence: 1.0
+
+  STATE_BUDGET:
+    priority: 3
+    label: State Budget / Finance Department document
+    title_patterns:
+      - 'budget at a glance'
+      - 'annual financial statement'
+      - 'medium[ -]term fiscal (?:policy|plan)'
+      - 'budget in brief'
+    report_year_patterns:
+      - 'budget[^\n]{0,30}?((?:19|20)\d{2}\s*[-–]\s*\d{2,4})'
+    # Budget documents mix actuals, BE and RE; an unqualified column is risky.
+    unqualified_column_confidence: 0.6
+
+  FINANCE_COMMISSION_STUDY:
+    priority: 4
+    label: Finance Commission / official study
+    title_patterns:
+      - 'study on (?:the )?finances of'
+      - 'for (?:the )?(?:tenth|eleventh|twelfth|thirteenth|fourteenth|fifteenth|sixteenth) finance commission'
+      - 'report of the (?:tenth|eleventh|twelfth|thirteenth|fourteenth|fifteenth|sixteenth) finance commission'
+    report_year_patterns: []
+    unqualified_column_confidence: 0.9
+
+  OTHER:
+    priority: 5
+    label: Other source
+    title_patterns: []
+    report_year_patterns: []
+    unqualified_column_confidence: 0.85
+
+# ---------------------------------------------------------------------------
+# Units. Order matters: first match wins. Values are never converted in Phase 1.
+# ---------------------------------------------------------------------------
+units:
+  - unit: INR crore
+    kind: currency
+    patterns:
+      - '(?:₹|rs\.?|rupees|inr)\s*(?:in\s*)?crores?'
+      - 'in\s*(?:₹|rs\.?|rupees|inr)?\s*crores?'
+      - '\(\s*crores?\s*\)'
+      - '(?:₹|rs\.?)\s*cr\.?\b'
+      - '\(\s*[^\w\s]?\s*in\s*crores?\s*\)'     # OCR: "(%in crore)", "(~ in crore)"
+  - unit: INR lakh
+    kind: currency
+    patterns:
+      - '(?:₹|rs\.?|rupees|inr)\s*(?:in\s*)?lakhs?'
+      - 'in\s*(?:₹|rs\.?)?\s*lakhs?'
+      - '\(\s*[^\w\s]?\s*in\s*lakhs?\s*\)'
+  - unit: INR thousand
+    kind: currency
+    patterns:
+      - '(?:₹|rs\.?|rupees|inr)\s*(?:in\s*)?thousands?'
+  - unit: percent
+    kind: percent
+    patterns:
+      - '\(?\s*in\s+per\s*cent\s*\)?'
+      - '\bper\s*cent(?:age)?\s+(?:share|distribution|composition)\b'
+      - '\bpercentage\s+(?:share|distribution|composition)\b'
+      - '^\s*as\s+(?:a\s+)?(?:percentage|per\s*cent)\s+of\b'       # sub-heading "As a percentage of RR"
+      - '\(\s*per\s*cent\s*\)'
+      - '\(\s*%\s*\)'
+  - unit: days
+    kind: other
+    patterns:
+      - '\(\s*days\s*\)'
+
+# ---------------------------------------------------------------------------
+# Column qualifiers found in year headers. Only accepted value types become observations;
+# skipped columns are listed (with reason) in candidates.json.
+# ---------------------------------------------------------------------------
+column_qualifiers:
+  actual:
+    - '\bactuals?\b'
+    - '\baccounts\b'
+    - '\baudited\b'
+  budget_estimate:
+    - '\bbe\b'
+    - '\bbudget estimates?\b'
+    - '\bbudget\b'
+  revised_estimate:
+    - '\bre\b'
+    - '\brevised estimates?\b'
+    - '\brevised\b'
+  projection:
+    - '\bprojections?\b'
+    - '\bprojected\b'
+    - '\btargets?\b'
+    - '\bnorms?\b'
+    - '\bassessment\b'
+    - '\best\b\.?'
+    - '\bestimated\b'
+  provisional:
+    - '\bprovisional\b'
+    - '\bpre-?actuals?\b'
+    - '\bunaudited\b'
+
+accepted_value_types: [actual]
+
+# Sub-columns under one year: "2023-24" over "Revenue | Capital | Total" or
+# "Charged | Voted | Total". Each variable picks the component it measures
+# (variables.yaml preferred_components; default: total, then an unsplit column).
+column_components:
+  revenue: ['^revenue$', '^revenue account$']
+  capital: ['^capital$', '^capital account$']
+  loans: ['^loans (?:and|&) advances$']
+  total: ['^total$', '^grand total$']
+  charged: ['^charged$']
+  voted: ['^voted$']
+  plan: ['^plan$', '^state plan$']
+  non_plan: ['^non[- ]?plan$', '^committed$']
+
+# Tables captioned as forecasts / projections: an unqualified year column there is a
+# projection, not an actual.
+projection_caption_patterns:
+  - '\bforecasts?\b'
+  - '\bprojections?\b'
+  - '\bscenarios?\b'
+  - '\bestimates?\s+of\b.*\bfor\s+the\s+period\b'
+
+# A year column whose header context (parent/sibling header cells) matches one of these
+# is not a level column (e.g. "Per cent share to total for the year 2015-16").
+column_exclude_patterns:
+  - '\bper ?cent\b'
+  - '\bpercentage\b'
+  - '%'
+  - '\bshare\b'
+  - '\bchange\b'
+  - '\bgrowth\b'
+  - '\bratio\b'
+  - '\bcagr\b'
+  - '\bvariation\b'
+  - '\bdifference\b'
+  - '\bincrease\b'
+  - '\bdecrease\b'
+  - '\bover\b'
+
+# ---------------------------------------------------------------------------
+# Table context
+# ---------------------------------------------------------------------------
+caption_patterns:
+  - '^\s*(?:table|appendix|annexure|annex|statement|exhibit)\s*[-–—:]?\s*[0-9ivxlA-Z]+(?:[.\-][0-9A-Za-z]+)*\b'
+  - '^\s*\d{1,2}[A-Z]?\.\s+(?:detailed\s+|summary\s+)?statement\s+of\b'     # Finance Accounts: "2. STATEMENT OF RECEIPTS"
+  - '^\s*appendix\s*[-–—]?\s*[ivxl]+\b'
+cited_source_patterns:
+  - '^\s*sources?\s*[:\-–]'
+
+# Base year of a statistical series (GSDP), e.g. "(2011-12 series)", "base year 2004-05",
+# "at 2011-12 base". The first capture group is the base financial year.
+series_base_patterns:
+  - '((?:19|20)\d{2}\s*[-–]\s*\d{2,4})\s*(?:series|base\b)'
+  - 'base(?:\s*year)?\s*[:(]?\s*((?:19|20)\d{2}\s*[-–]\s*\d{2,4})'
+  - 'new series\s*\(?((?:19|20)\d{2}\s*[-–]\s*\d{2,4})'
+
+# Deficit sign conventions declared in labels, e.g. "Revenue Deficit (-)/Surplus (+)".
+sign_conventions:
+  surplus_positive:
+    - 'deficit\s*\(\s*[-–−]\s*\)'
+    - 'surplus\s*\(\s*\+\s*\)'
+  deficit_positive:
+    - 'deficit\s*\(\s*\+\s*\)'
+    - 'surplus\s*\(\s*[-–−]\s*\)'

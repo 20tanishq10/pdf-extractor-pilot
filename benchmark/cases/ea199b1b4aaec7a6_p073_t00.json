@@ -1,0 +1,97 @@
+{
+ "case_id": "ea199b1b4aaec7a6_p073_t00",
+ "document_file": "Himachal Pradesh.pdf",
+ "document_sha256": "ea199b1b4aaec7a6054ce36aa5e52b96572ea3fa8c2c78ea33a28cd8ea8208b3",
+ "page": 73,
+ "table_id": "p073_t00",
+ "caption": "Table 6.2: Components of Revenue Expenditure for 2005-06 and 2016-17",
+ "snapshot": "data/processed/ea199b1b4aaec7a6/snapshots/p073_t00.png",
+ "gold_unit": null,
+ "rows": [
+  {
+   "label": "Salaries",
+   "variable": "salary_wages",
+   "values": {
+    "2005-06": 2362.96,
+    "2015-16": 6806.64,
+    "2016-17": 8106.91
+   },
+   "note": ""
+  },
+  {
+   "label": "Wages",
+   "variable": null,
+   "values": {
+    "2005-06": 81.52,
+    "2015-16": 212.02,
+    "2016-17": 313.67
+   },
+   "note": ""
+  },
+  {
+   "label": "Maintenance",
+   "variable": null,
+   "values": {
+    "2005-06": 481.53,
+    "2015-16": 1647.22,
+    "2016-17": 1782.76
+   },
+   "note": ""
+  },
+  {
+   "label": "Interest payments",
+   "variable": "interest_payments",
+   "values": {
+    "2005-06": 1562.72,
+    "2015-16": 3155.0,
+    "2016-17": 3358.91
+   },
+   "note": ""
+  },
+  {
+   "label": "Pensions",
+   "variable": "pension_expenditure",
+   "values": {
+    "2005-06": 668.76,
+    "2015-16": 3836.44,
+    "2016-17": 4114.17
+   },
+   "note": ""
+  },
+  {
+   "label": "Subsidies",
+   "variable": null,
+   "values": {
+    "2005-06": 142.0,
+    "2015-16": 1346.08,
+    "2016-17": 763.96
+   },
+   "note": ""
+  },
+  {
+   "label": "Others",
+   "variable": null,
+   "values": {
+    "2005-06": 1165.66,
+    "2015-16": 5299.22,
+    "2016-17": 6903.84
+   },
+   "note": ""
+  },
+  {
+   "label": "Total",
+   "variable": null,
+   "values": {
+    "2005-06": 6466.15,
+    "2015-16": 22302.81,
+    "2016-17": 25344.22
+   },
+   "note": ""
+  }
+ ],
+ "status": "draft",
+ "verified_by": "",
+ "verified_at": "",
+ "notes": "",
+ "prefilled_from": "rule-based pipeline output (UNVERIFIED)"
+}

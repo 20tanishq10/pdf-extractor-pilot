@@ -1,0 +1,62 @@
+# Semantic interpretation of already-extracted tables. Used only with `--llm`.
+#
+# The LLM classifies table rows (label -> canonical variable / NONE / UNKNOWN). It never
+# supplies numbers: values always come from the deterministic cell parser.
+#
+# Override without editing this file:
+#   STATEFIN_LLM_PROVIDER / STATEFIN_LLM_MODEL
+#   STATEFIN_LLM_FALLBACK_PROVIDER / STATEFIN_LLM_FALLBACK_MODEL  (model "none" = no fallback)
+# or the CLI flags --llm-provider/--llm-model/--llm-fallback-model/--no-llm-fallback.
+
+# Default: free local models through Ollama (brew install ollama; ollama pull qwen2.5:7b qwen2.5:14b).
+# Hosted alternative: provider gemini, model gemini-3.5-flash-lite / fallback gemini-3.5-flash
+# (gemini-2.5-* are closed to new API keys; needs GEMINI_API_KEY with credit).
+primary:
+  provider: ollama
+  model: qwen2.5:7b
+
+# Called only for tables where the primary model abstains, is unsure, or returns an
+# invalid/hallucinated answer; never for every table.
+fallback:
+  provider: ollama
+  model: qwen2.5:14b
+
+providers:
+  gemini:
+    api_key_env: GEMINI_API_KEY
+    base_url: https://generativelanguage.googleapis.com/v1beta
+    temperature: 0
+    timeout_s: 90
+    max_retries: 3
+    min_interval_s: 4.5          # stays under free-tier requests-per-minute limits
+  ollama:
+    base_url_env: OLLAMA_HOST
+    base_url: http://localhost:11434
+    temperature: 0
+    seed: 42                     # reproducible answers
+    num_ctx: 8192                # Ollama's default 2048-token window would truncate table prompts
+    keep_alive: 10m
+    timeout_s: 600
+  openai_compatible:
+    base_url_env: OPENAI_BASE_URL
+    base_url: http://localhost:8000/v1
+    api_key_env: OPENAI_API_KEY
+    temperature: 0
+    timeout_s: 300
+    json_mode: schema            # "object" for servers without JSON-schema support
+
+policy:
+  # unmapped_relevant: only tables with a row whose label uses target vocabulary but that
+  #                    the rules could not map (smallest API use; default)
+  # all_year_tables:   every year-indexed table (cross-checks the rules; for benchmarking)
+  table_selection: unmapped_relevant
+  max_tables_per_document: 40
+  max_rows_per_table: 80
+  escalate_below_confidence: 0.75
+  # Until the benchmark shows LLM mappings are reliable, every observation that exists only
+  # because of an LLM mapping is capped below the review threshold, so a human confirms it.
+  accept_llm_mappings_without_review: false
+  llm_confidence_cap: 0.79
+  accepted_confidence_factor: 0.95   # used only when accept_llm_mappings_without_review is true
+
+cache_dir: llm_cache   # under --data-dir

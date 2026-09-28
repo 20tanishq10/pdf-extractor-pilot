@@ -1,0 +1,28 @@
+{
+ "case_id": "ea199b1b4aaec7a6_p010_t02",
+ "document_file": "Himachal Pradesh.pdf",
+ "document_sha256": "ea199b1b4aaec7a6054ce36aa5e52b96572ea3fa8c2c78ea33a28cd8ea8208b3",
+ "page": 10,
+ "table_id": "p010_t02",
+ "caption": null,
+ "snapshot": "data/processed/ea199b1b4aaec7a6/snapshots/p010_t02.png",
+ "gold_unit": "INR crore",
+ "rows": [
+  {
+   "label": "Projected non-tax revenue 2424",
+   "variable": null,
+   "values": {
+    "2021-22": 2642.0,
+    "2022-23": 2880.0,
+    "2023-24": 3139.0,
+    "2024-25": 3422.0
+   },
+   "note": ""
+  }
+ ],
+ "status": "draft",
+ "verified_by": "",
+ "verified_at": "",
+ "notes": "",
+ "prefilled_from": "rule-based pipeline output (UNVERIFIED)"
+}

@@ -1,0 +1,826 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>State Finance Extractor</title>
+<style>
+:root {
+  color-scheme: light;
+  --page: #f9f9f7; --surface: #fcfcfb; --surface-2: #f3f2ee; --raised: #ffffff;
+  --text: #0b0b0b; --text-2: #52514e; --muted: #898781;
+  --grid: #e1e0d9; --baseline: #c3c2b7; --border: rgba(11,11,11,0.10);
+  --accent: #2a78d6; --accent-track: #cde2fb; --accent-ink: #1c5cab;
+  --good: #0ca30c; --good-ink: #006300; --warning: #fab219; --warning-ink: #7a5200;
+  --serious: #ec835a; --critical: #d03b3b; --critical-ink: #a32424;
+  --shadow: 0 1px 2px rgba(11,11,11,0.06), 0 2px 8px rgba(11,11,11,0.04);
+  --radius: 10px;
+  --font: system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --page: #0d0d0d; --surface: #1a1a19; --surface-2: #222220; --raised: #242422;
+    --text: #ffffff; --text-2: #c3c2b7; --muted: #898781;
+    --grid: #2c2c2a; --baseline: #383835; --border: rgba(255,255,255,0.10);
+    --accent: #3987e5; --accent-track: #184f95; --accent-ink: #86b6ef;
+    --good-ink: #0ca30c; --warning-ink: #fab219; --critical-ink: #e66767;
+    --shadow: none;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #0d0d0d; --surface: #1a1a19; --surface-2: #222220; --raised: #242422;
+  --text: #ffffff; --text-2: #c3c2b7; --muted: #898781;
+  --grid: #2c2c2a; --baseline: #383835; --border: rgba(255,255,255,0.10);
+  --accent: #3987e5; --accent-track: #184f95; --accent-ink: #86b6ef;
+  --good-ink: #0ca30c; --warning-ink: #fab219; --critical-ink: #e66767;
+  --shadow: none;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--page); color: var(--text); font: 14px/1.45 var(--font); }
+button, input, select, textarea { font: inherit; color: inherit; }
+a { color: var(--accent-ink); }
+.hidden { display: none !important; }
+.muted { color: var(--muted); }
+.secondary { color: var(--text-2); }
+.num { font-variant-numeric: tabular-nums; }
+.mono { font-family: var(--mono); font-size: 12.5px; }
+
+/* ---------- top bar & tabs ---------- */
+.topbar { position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  padding: 10px 20px; background: var(--surface); border-bottom: 1px solid var(--border); }
+.brand { font-weight: 650; letter-spacing: -0.01em; }
+.brand small { font-weight: 400; color: var(--muted); margin-left: 6px; }
+.spacer { flex: 1; }
+.chip { display: inline-flex; align-items: center; gap: 6px; padding: 2px 9px; border-radius: 999px; font-size: 12.5px;
+  border: 1px solid var(--border); background: var(--surface-2); color: var(--text-2); white-space: nowrap; }
+.chip .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--muted); }
+.chip.running .dot { background: var(--accent); animation: pulse 1.2s ease-in-out infinite; }
+.chip.good .dot { background: var(--good); } .chip.bad .dot { background: var(--critical); }
+.chip.warn .dot { background: var(--warning); }
+@keyframes pulse { 50% { opacity: .35; } }
+.reviewer { display: flex; align-items: center; gap: 6px; color: var(--text-2); font-size: 13px; }
+.reviewer input { width: 130px; }
+.tabs { display: flex; gap: 2px; padding: 0 20px; background: var(--surface); border-bottom: 1px solid var(--border);
+  overflow-x: auto; position: sticky; top: 49px; z-index: 19; }
+.tab { border: 0; background: none; padding: 10px 14px; cursor: pointer; color: var(--text-2);
+  border-bottom: 2px solid transparent; white-space: nowrap; }
+.tab[aria-selected="true"] { color: var(--text); border-bottom-color: var(--accent); font-weight: 600; }
+.badge { display: inline-block; min-width: 20px; padding: 0 6px; margin-left: 6px; border-radius: 999px; font-size: 12px;
+  background: color-mix(in srgb, var(--warning) 22%, transparent); color: var(--warning-ink); font-weight: 600; text-align: center; }
+main { padding: 18px 20px 40px; max-width: 1480px; margin: 0 auto; }
+
+/* ---------- common controls ---------- */
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); }
+.card-h { display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-bottom: 1px solid var(--border); }
+.card-h h2, .card-h h3 { margin: 0; font-size: 14px; font-weight: 650; }
+.card-b { padding: 14px 16px; }
+.btn { border: 1px solid var(--border); background: var(--raised); padding: 6px 12px; border-radius: 8px; cursor: pointer; }
+.btn:hover { background: var(--surface-2); }
+.btn:disabled { opacity: .5; cursor: not-allowed; }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+.btn.good { border-color: color-mix(in srgb, var(--good) 55%, transparent); color: var(--good-ink); }
+.btn.bad { border-color: color-mix(in srgb, var(--critical) 55%, transparent); color: var(--critical-ink); }
+.btn kbd { font: 11px var(--mono); padding: 0 4px; border: 1px solid var(--border); border-radius: 4px; margin-left: 6px; color: var(--muted); }
+input[type=text], input[type=number], input:not([type]), select, textarea {
+  background: var(--raised); border: 1px solid var(--border); border-radius: 7px; padding: 5px 8px; }
+textarea { width: 100%; resize: vertical; min-height: 54px; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.filters { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 12px; }
+.seg { display: inline-flex; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+.seg button { border: 0; background: var(--raised); padding: 5px 10px; cursor: pointer; color: var(--text-2); }
+.seg button[aria-pressed="true"] { background: var(--surface-2); color: var(--text); font-weight: 600; }
+table { border-collapse: collapse; width: 100%; }
+th, td { text-align: left; padding: 6px 10px; border-bottom: 1px solid var(--grid); vertical-align: top; }
+th { font-weight: 600; color: var(--text-2); font-size: 12.5px; background: var(--surface); position: sticky; top: 0; }
+td.r, th.r { text-align: right; }
+tr.click { cursor: pointer; } tr.click:hover td { background: var(--surface-2); }
+.empty { padding: 28px; text-align: center; color: var(--muted); }
+
+/* status glyphs: colour always paired with an icon and a label */
+.st { display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; border-radius: 50%;
+  font-size: 11px; font-weight: 700; flex: none; color: #fff; }
+.st.good { background: var(--good); } .st.warning { background: var(--warning); color: #3d2a00; }
+.st.critical { background: var(--critical); } .st.neutral { background: var(--baseline); color: var(--text); }
+.st.accent { background: var(--accent); } .st.muted { background: transparent; color: var(--muted); border: 1px solid var(--grid); }
+
+/* ---------- live ---------- */
+.live-top { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 14px; margin-bottom: 14px; }
+@media (max-width: 900px) { .live-top { grid-template-columns: 1fr; } }
+.kv { display: grid; grid-template-columns: max-content 1fr; gap: 4px 14px; font-size: 13px; }
+.kv dt { color: var(--muted); } .kv dd { margin: 0; overflow-wrap: anywhere; }
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-bottom: 14px; }
+.tile { padding: 12px 14px; }
+.tile .label { color: var(--text-2); font-size: 12.5px; }
+.tile .value { font-size: 26px; font-weight: 650; letter-spacing: -0.02em; margin-top: 2px; }
+.tile .sub { color: var(--muted); font-size: 12px; }
+.tile.link { cursor: pointer; } .tile.link:hover { background: var(--surface-2); }
+.files { max-height: 180px; overflow: auto; border: 1px solid var(--grid); border-radius: 8px; margin: 8px 0; }
+.files label { display: flex; gap: 8px; align-items: center; padding: 5px 10px; border-bottom: 1px solid var(--grid); cursor: pointer; }
+.files label:last-child { border-bottom: 0; }
+.files .name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.docs { display: grid; gap: 12px; margin-bottom: 14px; }
+.doc-title { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.stepper { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; margin: 12px 0 10px; }
+@media (max-width: 800px) { .stepper { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.step { border: 1px solid var(--grid); border-radius: 8px; padding: 7px 9px; min-width: 0; }
+.step .name { display: flex; gap: 6px; align-items: center; font-size: 12.5px; font-weight: 600; }
+.step .info { color: var(--muted); font-size: 12px; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.step.running { border-color: var(--accent); }
+.meter { height: 8px; border-radius: 4px; background: color-mix(in srgb, var(--accent) 16%, var(--surface)); overflow: hidden; }
+.meter > i { display: block; height: 100%; background: var(--accent); border-radius: 4px; transition: width .3s ease; }
+.meter.good { background: color-mix(in srgb, var(--good) 16%, var(--surface)); }
+.meter.good > i { background: var(--good); }
+.meter-label { display: flex; justify-content: space-between; font-size: 12.5px; color: var(--text-2); margin-bottom: 4px; }
+.errbox { margin-top: 10px; padding: 8px 10px; border-radius: 8px; border: 1px solid color-mix(in srgb, var(--critical) 45%, transparent);
+  background: color-mix(in srgb, var(--critical) 8%, var(--surface)); color: var(--critical-ink); font-size: 13px; overflow-wrap: anywhere; }
+.log { height: 340px; overflow: auto; font-size: 12.5px; }
+.log-row { display: grid; grid-template-columns: 70px 20px minmax(0, 170px) 1fr; gap: 8px; padding: 3px 16px; align-items: start;
+  border-bottom: 1px solid var(--grid); }
+.log-row .t { color: var(--muted); font-family: var(--mono); font-size: 11.5px; padding-top: 1px; }
+.log-row .d { color: var(--text-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.log-row .m { overflow-wrap: anywhere; }
+.log-row.warning .m { color: var(--warning-ink); } .log-row.error .m { color: var(--critical-ink); }
+
+/* ---------- review ---------- */
+.review { display: grid; grid-template-columns: minmax(300px, 380px) minmax(0, 1fr); gap: 14px; align-items: start; }
+@media (max-width: 980px) { .review { grid-template-columns: 1fr; } }
+.queue { position: sticky; top: 104px; max-height: calc(100vh - 124px); display: flex; flex-direction: column; }
+.queue .list { overflow: auto; flex: 1; }
+.qitem { display: grid; grid-template-columns: 20px minmax(0, 1fr) auto; gap: 8px; padding: 9px 14px; border-bottom: 1px solid var(--grid);
+  cursor: pointer; align-items: start; }
+.qitem:hover { background: var(--surface-2); }
+.qitem[aria-selected="true"] { background: color-mix(in srgb, var(--accent) 10%, var(--surface)); box-shadow: inset 3px 0 0 var(--accent); }
+.qitem .t1 { font-weight: 600; font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.qitem .t2 { color: var(--text-2); font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.qitem .t3 { color: var(--muted); font-size: 11.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.qitem .v { font-variant-numeric: tabular-nums; font-size: 12.5px; text-align: right; }
+.detail { min-height: 400px; }
+.d-head { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.d-head h2 { margin: 0; font-size: 17px; }
+.hero { font-size: 40px; font-weight: 650; letter-spacing: -0.02em; line-height: 1.1; margin: 10px 0 2px; }
+.hero small { font-size: 15px; color: var(--text-2); font-weight: 500; margin-left: 6px; }
+.figure { margin: 14px 0; border: 1px solid var(--grid); border-radius: 8px; overflow: hidden; background: #fff; }
+.figure img { display: block; max-width: 100%; height: auto; margin: 0 auto; }
+.figure .cap { display: flex; justify-content: space-between; gap: 10px; padding: 7px 10px; background: var(--surface-2);
+  color: var(--text-2); font-size: 12.5px; border-top: 1px solid var(--grid); }
+.section { margin-top: 18px; }
+.section h3 { font-size: 13px; margin: 0 0 8px; color: var(--text-2); font-weight: 650; text-transform: uppercase; letter-spacing: .03em; }
+.flag { display: grid; grid-template-columns: 20px minmax(0, 1fr); gap: 8px; padding: 6px 0; border-bottom: 1px solid var(--grid); font-size: 13px; }
+.flag b { font-weight: 600; }
+.decision { position: sticky; bottom: 0; background: var(--surface); border-top: 1px solid var(--border); padding: 12px 16px;
+  margin: 18px -16px -14px; border-radius: 0 0 var(--radius) var(--radius); }
+.hist { font-size: 12.5px; color: var(--text-2); }
+.hist li { margin: 2px 0; }
+.pill { display: inline-block; padding: 1px 8px; border-radius: 999px; font-size: 12px; border: 1px solid var(--border); background: var(--surface-2); }
+.pill.good { background: color-mix(in srgb, var(--good) 14%, var(--surface)); color: var(--good-ink); border-color: transparent; }
+.pill.warning { background: color-mix(in srgb, var(--warning) 20%, var(--surface)); color: var(--warning-ink); border-color: transparent; }
+.pill.critical { background: color-mix(in srgb, var(--critical) 12%, var(--surface)); color: var(--critical-ink); border-color: transparent; }
+
+/* ---------- panel ---------- */
+.legend { display: flex; gap: 14px; flex-wrap: wrap; font-size: 12.5px; color: var(--text-2); }
+.legend span { display: inline-flex; gap: 6px; align-items: center; }
+.panel-wrap { overflow: auto; }
+.panel-table th { position: sticky; top: 0; z-index: 2; white-space: nowrap; }
+.panel-table th:first-child, .panel-table td:first-child { position: sticky; left: 0; z-index: 1; background: var(--surface); }
+.pcell { cursor: pointer; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.pcell > span.inner { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.pcell.good { background: color-mix(in srgb, var(--good) 9%, var(--surface)); }
+.pcell.warning { background: color-mix(in srgb, var(--warning) 16%, var(--surface)); }
+.pcell.critical { background: color-mix(in srgb, var(--critical) 10%, var(--surface)); }
+.pcell.neutral { background: var(--surface-2); }
+.pcell:hover, .pcell:focus-visible { box-shadow: inset 0 0 0 2px var(--accent); }
+.tooltip { position: fixed; z-index: 50; pointer-events: none; max-width: 340px; background: var(--raised); border: 1px solid var(--border);
+  border-radius: 8px; padding: 8px 10px; box-shadow: 0 6px 24px rgba(0,0,0,.18); font-size: 12.5px; }
+.tooltip .tv { font-size: 16px; font-weight: 650; }
+.toast { position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%); z-index: 60; background: var(--text); color: var(--page);
+  padding: 8px 14px; border-radius: 8px; font-size: 13px; box-shadow: 0 6px 24px rgba(0,0,0,.2); }
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">State Finance Extractor<small>live dashboard</small></div>
+  <span class="chip" id="runchip"><span class="dot"></span><span id="runchip-text">Idle</span></span>
+  <span class="chip hidden" id="rebuildchip"><span class="dot"></span><span id="rebuildchip-text"></span></span>
+  <div class="spacer"></div>
+  <span class="chip" id="conn"><span class="dot"></span><span id="conn-text">connecting</span></span>
+  <label class="reviewer">Reviewer <input id="reviewer" type="text" autocomplete="off" spellcheck="false"></label>
+  <button class="btn" id="theme" title="Toggle light / dark">Theme</button>
+</header>
+<nav class="tabs" role="tablist">
+  <button class="tab" role="tab" data-tab="live" aria-selected="true">Live</button>
+  <button class="tab" role="tab" data-tab="review">Review<span class="badge hidden" id="review-badge">0</span></button>
+  <button class="tab" role="tab" data-tab="panel">Panel</button>
+  <button class="tab" role="tab" data-tab="obs">Observations</button>
+  <button class="tab" role="tab" data-tab="docs">Documents</button>
+</nav>
+
+<main>
+<!-- ============================ LIVE ============================ -->
+<section id="tab-live">
+  <div class="live-top">
+    <div class="card">
+      <div class="card-h"><h2>Current run</h2><div class="spacer"></div>
+        <button class="btn" id="btn-rebuild" title="Re-validate cached extractions and apply reviewer decisions">Rebuild outputs</button></div>
+      <div class="card-b"><dl class="kv" id="run-kv"></dl></div>
+    </div>
+    <div class="card">
+      <div class="card-h"><h2>Start extraction</h2></div>
+      <div class="card-b">
+        <div class="secondary" style="font-size:13px">Choose PDFs (files in the Docs folder and previously processed documents):</div>
+        <div class="files" id="files"></div>
+        <div class="row"><input id="custom-path" type="text" placeholder="…or paste a full path to a PDF" style="flex:1; min-width: 200px"></div>
+        <div class="row" style="margin-top:8px">
+          <label><input type="checkbox" id="opt-llm"> LLM row mapping</label>
+          <label><input type="checkbox" id="opt-force"> Re-extract (ignore cache)</label>
+          <div class="spacer"></div>
+          <button class="btn primary" id="btn-start">Start</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="kpis" id="kpis"></div>
+  <div class="docs" id="docs"></div>
+  <div class="card">
+    <div class="card-h"><h2>Event log</h2><div class="spacer"></div>
+      <div class="seg" id="log-filter">
+        <button data-level="all" aria-pressed="true">All</button><button data-level="warning">Warnings</button><button data-level="error">Errors</button>
+      </div>
+      <label class="secondary" style="font-size:13px"><input type="checkbox" id="log-follow" checked> Follow</label>
+    </div>
+    <div class="log" id="log" aria-live="polite"></div>
+  </div>
+</section>
+
+<!-- ============================ REVIEW ============================ -->
+<section id="tab-review" class="hidden">
+  <div class="review">
+    <aside class="card queue">
+      <div class="card-b" style="padding-bottom:8px">
+        <div class="filters">
+          <div class="seg" id="q-status">
+            <button data-v="open" aria-pressed="true">Open</button><button data-v="decided">Decided</button><button data-v="all">All</button>
+          </div>
+          <select id="q-type"><option value="">All types</option><option value="observation">Flagged value</option>
+            <option value="conflict">Conflict</option><option value="row_label">Unmapped row</option><option value="missing">Missing variable</option></select>
+        </div>
+        <div class="filters" style="margin-bottom:6px">
+          <select id="q-variable"><option value="">All variables</option></select>
+          <input id="q-search" type="text" placeholder="Search label, table…" style="flex:1; min-width:120px">
+        </div>
+        <div class="meter-label"><span id="q-progress-label">—</span><span class="muted" style="font-size:12px">j / k to move</span></div>
+        <div class="meter good"><i id="q-progress" style="width:0%"></i></div>
+      </div>
+      <div class="list" id="q-list"></div>
+    </aside>
+    <article class="card detail"><div class="card-b" id="detail"><div class="empty">Select an item to review.</div></div></article>
+  </div>
+</section>
+
+<!-- ============================ PANEL ============================ -->
+<section id="tab-panel" class="hidden">
+  <div class="card">
+    <div class="card-h"><h2>Panel coverage</h2>
+      <select id="p-state" class="hidden"></select>
+      <div class="spacer"></div>
+      <div class="legend" id="p-legend"></div>
+    </div>
+    <div class="panel-wrap" id="p-wrap"></div>
+  </div>
+  <p class="muted" style="font-size:12.5px">INR crore. Deficits are surplus-positive (a deficit is negative), as CAG prints them.
+    Click a cell to open its source and review it.</p>
+</section>
+
+<!-- ============================ OBSERVATIONS ============================ -->
+<section id="tab-obs" class="hidden">
+  <div class="filters">
+    <input id="o-search" type="text" placeholder="Search label, year, table, document…" style="min-width:260px">
+    <select id="o-variable"><option value="">All variables</option></select>
+    <select id="o-status"><option value="">Any status</option><option>AUTO_ACCEPTED</option><option>NEEDS_REVIEW</option>
+      <option>HUMAN_ACCEPTED</option><option>HUMAN_CORRECTED</option><option>HUMAN_REJECTED</option></select>
+    <span class="muted" id="o-count"></span>
+  </div>
+  <div class="card" style="overflow:auto; max-height: calc(100vh - 190px)"><table id="o-table"></table></div>
+</section>
+
+<!-- ============================ DOCUMENTS ============================ -->
+<section id="tab-docs" class="hidden">
+  <div class="card" style="margin-bottom:14px"><div class="card-h"><h2>Documents</h2></div><div style="overflow:auto"><table id="d-table"></table></div></div>
+  <div class="card"><div class="card-h"><h2>Recent runs</h2><div class="spacer"></div>
+    <a class="btn" href="/api/reviews.csv">Download review decisions (CSV)</a></div><div style="overflow:auto"><table id="r-table"></table></div></div>
+</section>
+</main>
+<div class="tooltip hidden" id="tooltip" role="tooltip"></div>
+<div class="toast hidden" id="toast" role="status"></div>
+
+<script>
+"use strict";
+/* All text from the data goes through textContent (labels come from PDFs). */
+const $ = (sel, root = document) => root.querySelector(sel);
+function h(tag, attrs, ...kids) {
+  const el = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs || {})) {
+    if (v === null || v === undefined || v === false) continue;
+    if (k === "class") el.className = v;
+    else if (k === "text") el.textContent = v;
+    else if (k.startsWith("on")) el.addEventListener(k.slice(2), v);
+    else if (k === "style") el.setAttribute("style", v);
+    else el.setAttribute(k, v === true ? "" : v);
+  }
+  for (const kid of kids.flat()) if (kid !== null && kid !== undefined && kid !== false)
+    el.append(kid instanceof Node ? kid : document.createTextNode(String(kid)));
+  return el;
+}
+/* replaceChildren() would print "null" for optional parts; fill() drops them. */
+function fill(el, ...kids) { el.replaceChildren(...kids.flat(Infinity).filter(k => k !== null && k !== undefined && k !== false)); }
+const store = { get(k, d) { try { return localStorage.getItem(k) ?? d; } catch (e) { return d; } },
+                set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} } };
+const fmtIN = new Intl.NumberFormat("en-IN", { maximumFractionDigits: 2, minimumFractionDigits: 2 });
+const fmtINt = new Intl.NumberFormat("en-IN", { maximumFractionDigits: 0 });
+const fmt = v => v === null || v === undefined || v === "" ? "—" : Number.isInteger(+v) ? fmtINt.format(+v) : fmtIN.format(+v);
+const PRETTY = { gsdp: "GSDP", salary_wages: "Salaries & wages", revenue_deficit_surplus: "Revenue deficit/surplus",
+  outstanding_liabilities: "Outstanding liabilities", union_tax_share: "Share in Union taxes", grants_from_centre: "Grants from Centre" };
+const pretty = v => v ? (PRETTY[v] || (v.charAt(0).toUpperCase() + v.slice(1).replace(/_/g, " "))) : "—";
+const time = iso => iso ? new Date(iso).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", second: "2-digit" }) : "";
+const when = iso => iso ? new Date(iso).toLocaleString([], { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" }) : "—";
+function dur(s) { s = Math.max(0, Math.round(s)); return s < 60 ? `${s}s` : `${Math.floor(s / 60)}m ${s % 60}s`; }
+async function api(path) { const r = await fetch(path, { cache: "no-store" }); if (!r.ok) throw new Error((await r.json()).error || r.statusText); return r.json(); }
+async function post(path, body) {
+  const r = await fetch(path, { method: "POST", headers: { "Content-Type": "application/json", "X-Statefin": "1" }, body: JSON.stringify(body) });
+  const data = await r.json(); if (!r.ok) throw new Error(data.error || r.statusText); return data;
+}
+let toastTimer;
+function toast(msg) { const t = $("#toast"); t.textContent = msg; t.classList.remove("hidden"); clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.add("hidden"), 2600); }
+
+const S = { overview: null, tab: "live", items: [], sel: null, resultsRun: null, reviewSig: "", logLevel: "all", events: [],
+            files: [], variables: {} };
+
+/* ---------------- theme & reviewer ---------------- */
+(function initPrefs() {
+  const saved = store.get("statefin-theme", ""); if (saved) document.documentElement.dataset.theme = saved;
+  $("#theme").addEventListener("click", () => {
+    const dark = document.documentElement.dataset.theme ? document.documentElement.dataset.theme === "dark"
+      : matchMedia("(prefers-color-scheme: dark)").matches;
+    document.documentElement.dataset.theme = dark ? "light" : "dark"; store.set("statefin-theme", dark ? "light" : "dark");
+  });
+  const rv = $("#reviewer"); rv.value = store.get("statefin-reviewer", "reviewer");
+  rv.addEventListener("change", () => store.set("statefin-reviewer", rv.value.trim() || "reviewer"));
+})();
+const reviewer = () => ($("#reviewer").value || "reviewer").trim();
+
+/* ---------------- tabs ---------------- */
+function showTab(name) {
+  S.tab = name;
+  document.querySelectorAll(".tab").forEach(b => b.setAttribute("aria-selected", b.dataset.tab === name));
+  document.querySelectorAll("main > section").forEach(s => s.classList.toggle("hidden", s.id !== `tab-${name}`));
+  if (name === "review") loadQueue(); if (name === "panel") loadPanel(); if (name === "obs") loadObs(); if (name === "docs") loadDocs();
+}
+document.querySelectorAll(".tab").forEach(b => b.addEventListener("click", () => showTab(b.dataset.tab)));
+
+/* ---------------- live: overview ---------------- */
+const STAGES = [["TEXT_EXTRACTED", "Text"], ["CANDIDATES_FOUND", "Candidates"], ["TABLES_EXTRACTED", "Tables"],
+  ["VALUES_EXTRACTED", "Values"], ["SEMANTIC_MAPPED", "LLM"], ["VALIDATED", "Validated"]];
+const STAGE_VERB = { TEXT_EXTRACTED: "Reading page", TABLES_EXTRACTED: "Finding tables on candidate page",
+  VALUES_EXTRACTED: "Interpreting table", SEMANTIC_MAPPED: "LLM on table" };
+const RUN_STATUS = { running: ["running", "Running"], completed: ["good", "Completed"], completed_with_errors: ["warn", "Completed with errors"],
+  failed: ["bad", "Failed"], interrupted: ["warn", "Interrupted"] };
+
+function renderOverview(ov) {
+  const prev = S.overview; S.overview = ov; S.variables = ov.variables || S.variables;
+  const run = ov.run;
+  const [cls, label] = run ? (RUN_STATUS[run.status] || ["", run.status]) : ["", "Idle"];
+  const chip = $("#runchip"); chip.className = `chip ${cls}`;
+  $("#runchip-text").textContent = run ? `${label} · ${run.kind}` : "Idle";
+  const pending = ov.review.pending_rebuild;
+  const rc = $("#rebuildchip");
+  rc.classList.toggle("hidden", !(pending || ov.rebuild_scheduled));
+  rc.className = `chip ${ov.rebuild_scheduled || (ov.active && run && run.kind === "rebuild") ? "running" : "warn"}` + (pending || ov.rebuild_scheduled ? "" : " hidden");
+  $("#rebuildchip-text").textContent = ov.rebuild_scheduled ? "Applying decisions…" : `${pending} decision(s) not yet applied`;
+  const badge = $("#review-badge"); badge.textContent = ov.review.open; badge.classList.toggle("hidden", !ov.review.open);
+  $("#btn-start").disabled = ov.active;
+
+  // run facts
+  const kv = $("#run-kv"); fill(kv);
+  if (!run) { kv.append(h("dt", { text: "Status" }), h("dd", { text: "No runs yet. Start one on the right." })); }
+  else {
+    const started = new Date(run.started_at), ended = run.finished_at ? new Date(run.finished_at) : new Date();
+    const add = (k, v) => kv.append(h("dt", { text: k }), h("dd", {}, v));
+    add("Run", h("span", { class: "mono", text: run.run_id }));
+    add("Status", `${label}${run.status === "running" ? "" : " · " + when(run.finished_at)}`);
+    add("Elapsed", dur((ended - started) / 1000));
+    add("Documents", (run.options.pdfs || []).map(p => p.split("/").pop()).join(", ") || "—");
+    add("Options", [run.options.llm ? "LLM on" : "LLM off", run.options.force ? "re-extract" : "cached stages reused"].join(" · "));
+    if (run.error) add("Error", h("span", { class: "errbox", style: "display:inline-block;margin:0", text: run.error }));
+  }
+  // KPI tiles
+  const c = (run && run.counters) || {};
+  const tiles = [
+    ["Documents", c.documents ?? 0, `${(ov.documents || []).filter(d => d.status === "done").length} finished`],
+    ["Pages", fmt(c.pages ?? 0), `${fmt(c.candidate_pages ?? 0)} candidate pages`],
+    ["Tables", fmt(c.tables ?? 0), `${fmt(c.year_tables ?? 0)} year-indexed · ${fmt(c.tables_with_values ?? 0)} with values`],
+    ["Observations", fmt(c.observations_total ?? c.observations ?? 0), `${fmt(c.panel_values ?? 0)} panel values`],
+    ["Open reviews", ov.review.open, `${ov.review.decided} decided`, () => showTab("review")],
+    ["LLM calls", fmt(c.llm_calls ?? 0), `${c.llm_cached ?? 0} cached · ${c.llm_escalations ?? 0} escalated · ${c.llm_errors ?? 0} errors`],
+  ];
+  fill($("#kpis"), ...tiles.map(([l, v, s, on]) => h("div", { class: `card tile${on ? " link" : ""}`, onclick: on,
+    tabindex: on ? 0 : null }, h("div", { class: "label", text: l }), h("div", { class: "value num", text: v }), h("div", { class: "sub", text: s }))));
+  renderDocs(ov.documents || []);
+  // data refresh when results change
+  const sig = `${ov.results_run_id}|${ov.review.open}|${ov.review.decided}|${ov.results_status}`;
+  if (sig !== S.reviewSig) {
+    const first = !S.reviewSig; S.reviewSig = sig;
+    if (!first || S.tab !== "live") { if (S.tab === "review") loadQueue(true); if (S.tab === "panel") loadPanel(); if (S.tab === "obs") loadObs(); }
+  }
+}
+
+function renderDocs(docs) {
+  const box = $("#docs");
+  if (!docs.length) { fill(box); return; }
+  fill(box, ...docs.map(d => {
+    const stages = d.stages || {};
+    const steps = STAGES.map(([key, name]) => {
+      const s = stages[key]; const st = s ? s.status : (key === "SEMANTIC_MAPPED" ? "skipped" : "pending");
+      const icon = { done: ["good", "✓"], cached: ["neutral", "↺"], running: ["accent", "•"], failed: ["critical", "✕"],
+        pending: ["muted", ""], skipped: ["muted", "–"] }[st] || ["muted", ""];
+      let info = { done: "done", cached: "from cache", running: "running", failed: "failed", pending: "waiting", skipped: "not requested" }[st] || st;
+      const stats = (s && s.stats) || {};
+      if (key === "TEXT_EXTRACTED" && d.pages) info = `${d.pages} pages` + (st === "cached" ? " · cached" : "");
+      if (key === "CANDIDATES_FOUND" && d.candidate_pages !== undefined) info = `${d.candidate_pages} pages` + (st === "cached" ? " · cached" : "");
+      if (key === "TABLES_EXTRACTED" && d.tables !== undefined) info = `${d.tables} tables` + (st === "cached" ? " · cached" : "");
+      if (key === "VALUES_EXTRACTED" && d.observations !== undefined && st !== "running") info = `${d.observations} obs` + (st === "cached" ? " · cached" : "");
+      if (key === "SEMANTIC_MAPPED" && stats.new_observations !== undefined) info = `${stats.tables} tables · +${stats.new_observations}`;
+      if (st === "running" && s.total) info = `${s.done}/${s.total}`;
+      return h("div", { class: `step ${st}` }, h("div", { class: "name" }, h("span", { class: `st ${icon[0]}`, "aria-hidden": "true", text: icon[1] }), name),
+        h("div", { class: "info", title: info, text: info }));
+    });
+    const cur = d.current_stage && stages[d.current_stage];
+    let meter = null;
+    if (d.status === "running" && cur && cur.status === "running") {
+      const pct = cur.total ? Math.round(100 * cur.done / cur.total) : 0;
+      meter = h("div", {}, h("div", { class: "meter-label" }, h("span", { text: cur.total ? `${STAGE_VERB[d.current_stage] || "Working"} ${cur.done} of ${cur.total}` : "Working…" }),
+        h("span", { class: "num", text: cur.total ? `${pct}%` : "" })), h("div", { class: "meter", role: "progressbar", "aria-valuenow": pct, "aria-valuemin": 0, "aria-valuemax": 100 }, h("i", { style: `width:${pct}%` })));
+    }
+    const st = { running: ["running", "Processing"], done: ["good", "Done"], failed: ["bad", "Failed"] }[d.status] || ["", d.status || "—"];
+    const meta = [d.state || "state not detected", (d.document_type || "").replace(/_/g, " "), d.report_year, d.pages ? `${d.pages} pages` : null,
+      d.needs_ocr ? `${d.needs_ocr} need OCR` : null].filter(Boolean).join(" · ");
+    return h("div", { class: "card card-b" },
+      h("div", { class: "row" }, h("div", { class: "doc-title", title: d.file, text: d.file || d.document_id }), h("div", { class: "spacer" }),
+        h("span", { class: `chip ${st[0]}` }, h("span", { class: "dot" }), st[1])),
+      h("div", { class: "secondary", style: "font-size:13px", text: meta }),
+      h("div", { class: "stepper" }, steps), meter, d.error ? h("div", { class: "errbox", text: d.error }) : null);
+  }));
+}
+
+/* ---------------- live: event log ---------------- */
+const LEVEL_ICON = { info: ["neutral", "i"], warning: ["warning", "!"], error: ["critical", "✕"] };
+function docName(id) { const d = (S.overview && S.overview.documents || []).find(x => x.document_id === id); return d ? d.file : (id || ""); }
+function logRow(e) {
+  const [cls, glyph] = LEVEL_ICON[e.level] || LEVEL_ICON.info;
+  const row = h("div", { class: `log-row ${e.level}`, "data-level": e.level },
+    h("span", { class: "t", text: time(e.ts) }), h("span", { class: `st ${cls}`, "aria-label": e.level, text: glyph }),
+    h("span", { class: "d", title: docName(e.document_id), text: e.document_id ? docName(e.document_id) : e.kind }),
+    h("span", { class: "m", text: e.message }));
+  row.hidden = !levelVisible(e.level); return row;
+}
+function levelVisible(level) { return S.logLevel === "all" || (S.logLevel === "warning" ? level !== "info" : level === "error"); }
+function appendEvents(events) {
+  const log = $("#log"); const follow = $("#log-follow").checked;
+  const frag = document.createDocumentFragment(); events.forEach(e => frag.append(logRow(e))); log.append(frag);
+  while (log.childElementCount > 1500) log.firstElementChild.remove();
+  if (follow) log.scrollTop = log.scrollHeight;
+  if (events.some(e => e.kind === "run" || e.kind === "review")) setTimeout(loadFiles, 300);
+}
+$("#log-filter").addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return; S.logLevel = b.dataset.level;
+  $("#log-filter").querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", x === b));
+  $("#log").querySelectorAll(".log-row").forEach(r => r.hidden = !levelVisible(r.dataset.level));
+});
+
+/* ---------------- live: start / rebuild ---------------- */
+async function loadFiles() {
+  try { S.files = await api("/api/files"); } catch (e) { return; }
+  const box = $("#files"); const checked = new Set([...box.querySelectorAll("input:checked")].map(i => i.value));
+  if (!S.files.length) { fill(box, h("div", { class: "empty", text: "No PDFs found. Paste a path below." })); return; }
+  fill(box, ...S.files.map(f => h("label", {}, h("input", { type: "checkbox", value: f.path, checked: checked.has(f.path) }),
+    h("span", { class: "name", title: f.path, text: f.name }), h("span", { class: "muted num", text: `${f.size_mb} MB` }),
+    f.document_id ? h("span", { class: "pill", text: "processed" }) : null)));
+}
+$("#btn-start").addEventListener("click", async () => {
+  const pdfs = [...$("#files").querySelectorAll("input:checked")].map(i => i.value);
+  const custom = $("#custom-path").value.trim(); if (custom) pdfs.push(custom);
+  if (!pdfs.length) return toast("Choose at least one PDF");
+  try { await post("/api/run", { pdfs, llm: $("#opt-llm").checked, force: $("#opt-force").checked }); toast("Extraction started"); }
+  catch (e) { toast(e.message); }
+});
+$("#btn-rebuild").addEventListener("click", async () => { try { await post("/api/rebuild", {}); toast("Rebuild scheduled"); } catch (e) { toast(e.message); } });
+
+/* ---------------- review queue ---------------- */
+const SEV = { error: ["critical", "✕", "Error"], warning: ["warning", "!", "Warning"], low_confidence: ["neutral", "?", "Low confidence"],
+  decided: ["good", "✓", "Decided"] };
+const TYPE_LABEL = { observation: "Flagged value", conflict: "Conflict", row_label: "Unmapped row", missing: "Missing variable" };
+function fillVariableSelects() {
+  for (const id of ["#q-variable", "#o-variable"]) {
+    const sel = $(id); if (sel.options.length > 1) continue;
+    Object.keys(S.variables).forEach(v => sel.append(h("option", { value: v, text: pretty(v) })));
+  }
+}
+async function loadQueue(keepSelection) {
+  fillVariableSelects();
+  const status = $("#q-status").querySelector("[aria-pressed=true]").dataset.v;
+  const params = new URLSearchParams({ status, type: $("#q-type").value, variable: $("#q-variable").value, q: $("#q-search").value });
+  let data; try { data = await api(`/api/review/items?${params}`); } catch (e) { return; }
+  S.items = data.items;
+  const ov = S.overview; const total = ov ? ov.review.total : 0, decided = ov ? ov.review.decided : 0;
+  $("#q-progress-label").textContent = total ? `${decided} of ${total} decided` : "Nothing to review";
+  $("#q-progress").style.width = total ? `${Math.round(100 * decided / total)}%` : "0%";
+  const list = $("#q-list");
+  if (!S.items.length) { fill(list, h("div", { class: "empty", text: status === "open" ? "Nothing open. All caught up." : "No items." })); }
+  else fill(list, ...S.items.map((it, i) => queueRow(it, i)));
+  if (keepSelection && S.sel) { const idx = S.items.findIndex(x => x.item_id === S.sel.item_id); if (idx >= 0) return markSelected(idx); }
+  if (S.items.length && (!S.sel || !S.items.some(x => x.item_id === S.sel.item_id))) selectItem(0);
+}
+function queueRow(it, i) {
+  const sev = it.decision ? SEV.decided : (SEV[it.severity] || SEV.warning);
+  const title = it.item_type === "row_label" ? `Unmapped row` : it.item_type === "missing" ? `Missing: ${pretty(it.variable)}`
+    : `${pretty(it.variable)} · ${it.financial_year}`;
+  const sub = it.item_type === "missing" ? (it.state || "") : `“${it.raw_label || ""}” · p.${it.source_page ?? "?"}`;
+  const checks = it.decision ? `${it.decision.decision} by ${it.decision.reviewer}` : `${TYPE_LABEL[it.item_type]} · ${(it.checks || []).join(", ")}`;
+  return h("div", { class: "qitem", role: "option", tabindex: 0, "data-i": i, onclick: () => selectItem(i),
+      onkeydown: e => { if (e.key === "Enter") selectItem(i); } },
+    h("span", { class: `st ${sev[0]}`, title: sev[2], "aria-label": sev[2], text: sev[1] }),
+    h("div", { style: "min-width:0" }, h("div", { class: "t1", text: title }), h("div", { class: "t2", text: sub }), h("div", { class: "t3", text: checks })),
+    h("div", { class: "v", text: it.value !== undefined && it.value !== null ? fmt(it.value) : "" }));
+}
+function markSelected(i) {
+  $("#q-list").querySelectorAll(".qitem").forEach(el => el.setAttribute("aria-selected", el.dataset.i == i));
+  const el = $("#q-list").querySelector(`[data-i="${i}"]`); if (el) el.scrollIntoView({ block: "nearest" });
+}
+function selectItem(i) { if (!S.items[i]) return; S.sel = S.items[i]; markSelected(i); renderDetail(S.items[i]); }
+function nextItem(step = 1) {
+  if (!S.items.length) return; const i = S.sel ? S.items.findIndex(x => x.item_id === S.sel.item_id) : -1;
+  selectItem(Math.min(S.items.length - 1, Math.max(0, i + step)));
+}
+$("#q-status").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return;
+  $("#q-status").querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", x === b)); S.sel = null; loadQueue(); });
+["#q-type", "#q-variable"].forEach(id => $(id).addEventListener("change", () => { S.sel = null; loadQueue(); }));
+let searchTimer; $("#q-search").addEventListener("input", () => { clearTimeout(searchTimer); searchTimer = setTimeout(() => { S.sel = null; loadQueue(); }, 250); });
+
+/* ---------------- review detail ---------------- */
+function flagRow(f) {
+  const [cls, glyph] = f.severity === "error" ? ["critical", "✕"] : f.severity === "warning" ? ["warning", "!"] : ["neutral", "i"];
+  return h("div", { class: "flag" }, h("span", { class: `st ${cls}`, "aria-label": f.severity, text: glyph }),
+    h("div", {}, h("b", { text: f.check.replace(/_/g, " ") }), " — ", f.message));
+}
+function decisionPill(d) {
+  if (!d) return null;
+  const cls = d.decision === "rejected" || d.decision === "none" ? "critical" : "good";
+  const extra = d.decision === "corrected" ? ` → ${fmt(d.value)}` : d.decision === "mapped" ? ` → ${pretty(d.variable)}` : "";
+  return h("span", { class: `pill ${cls}`, text: `${d.decision}${extra} · ${d.reviewer}` });
+}
+function history(list) {
+  if (!list || !list.length) return null;
+  return h("div", { class: "section" }, h("h3", { text: "Decision history" }),
+    h("ul", { class: "hist" }, list.map(r => h("li", { text: `${when(r.created_at)} · ${r.reviewer} · ${r.decision}` +
+      (r.value !== null && r.value !== undefined ? ` ${fmt(r.value)}` : "") + (r.variable ? ` ${r.variable}` : "") + (r.note ? ` — ${r.note}` : "") }))));
+}
+async function renderDetail(it) {
+  const box = $("#detail");
+  if (it.item_type === "row_label") return renderRow(it);
+  if (it.item_type === "missing") return renderMissing(it);
+  let data; try { data = await api(`/api/observation?id=${encodeURIComponent(it.target_id)}`); }
+  catch (e) { fill(box, h("div", { class: "empty", text: `Not in the latest results (${e.message}). It may disappear after a rebuild.` })); return; }
+  renderObservation(data, it);
+}
+function renderObservation(data, it) {
+  const o = data.observation, box = $("#detail");
+  const sev = it ? (SEV[it.severity] || SEV.warning) : null;
+  let imgKind = "cell";
+  const img = h("img", { alt: `Source table on page ${o.source_page}, value highlighted`, src: `/api/image?obs=${o.observation_id}&kind=cell` });
+  const toggle = h("button", { class: "btn", style: "padding:2px 8px;font-size:12px", text: "Whole page", onclick: () => {
+    imgKind = imgKind === "cell" ? "page" : "cell"; img.src = `/api/image?obs=${o.observation_id}&kind=${imgKind}`;
+    toggle.textContent = imgKind === "cell" ? "Whole page" : "Table only"; } });
+  const corrected = o.value_as_extracted !== null && o.value_as_extracted !== undefined && o.value_as_extracted !== o.value;
+  const kv = h("dl", { class: "kv" });
+  const add = (k, v) => { if (v !== null && v !== undefined && v !== "") kv.append(h("dt", { text: k }), h("dd", {}, v)); };
+  add("Row label", `“${o.raw_label}”`); add("Row as printed", h("span", { class: "mono", text: o.source_text }));
+  add("Column", o.column_header); add("Value type", o.value_type); add("Sign convention", o.sign_convention);
+  add("Footnote", o.label_footnote); add("Table cites", o.table_cited_source);
+  add("Mapping", `${o.mapping_method}${o.mapping_note ? " — " + o.mapping_note : ""}`);
+  add("Confidence", `${o.confidence} (${o.confidence_tier}) — ${(o.confidence_reasons || []).join("; ")}`);
+  add("Reconciliation", o.reconciliation_status); add("Observation id", h("span", { class: "mono", text: o.observation_id }));
+  const flags = (o.validation_flags || []).slice().sort((a, b) => ({ error: 0, warning: 1, info: 2 }[a.severity] - { error: 0, warning: 1, info: 2 }[b.severity]));
+  const group = data.group.length > 1 ? h("div", { class: "section" }, h("h3", { text: `All ${data.group.length} observations of this cell` }),
+    h("table", {}, h("thead", {}, h("tr", {}, ["Value", "Source", "Page", "Table", "Conf.", "Status", ""].map(t => h("th", { text: t })))),
+      h("tbody", {}, data.group.map(g => h("tr", {},
+        h("td", { class: "num", text: fmt(g.value) }), h("td", { text: g.source_document.slice(0, 32) }), h("td", { class: "num", text: g.source_page }),
+        h("td", { text: (g.source_table || g.table_id).slice(0, 48) }), h("td", { class: "num", text: g.confidence }),
+        h("td", {}, g.pending_decision ? decisionPill(g.pending_decision) : g.review_status.replace(/_/g, " ").toLowerCase()),
+        h("td", {}, h("button", { class: "btn good", style: "padding:2px 8px;font-size:12px", text: "This one is correct",
+          onclick: () => pick(g.observation_id, data.group.map(x => x.observation_id)) }))))))) : null;
+  const corrInput = h("input", { type: "text", inputmode: "decimal", id: "corr", placeholder: "Correct value", style: "width:150px",
+    onkeydown: e => { if (e.key === "Enter") decide("corrected"); } });
+  const note = h("textarea", { id: "note", placeholder: "Note — what is right, and where you checked (e.g. 'matches Finance Accounts Statement 4')" });
+  fill(box, 
+    h("div", { class: "d-head" }, h("h2", { text: `${pretty(o.canonical_variable)} · ${o.financial_year}` }),
+      h("span", { class: "secondary", text: o.state || "" }),
+      sev ? h("span", { class: `pill ${sev[0] === "neutral" ? "" : sev[0]}`, text: sev[2] }) : null, decisionPill(data.decision)),
+    h("div", { class: "hero num" }, fmt(o.value), h("small", { text: o.unit || "unit unknown" })),
+    corrected ? h("div", { class: "muted", text: `Extracted from the PDF as ${fmt(o.value_as_extracted)} (“${o.raw_value_text}”)` })
+      : h("div", { class: "muted", text: `Printed as “${o.raw_value_text}”` }),
+    h("div", { class: "figure" }, img, h("div", { class: "cap" },
+      h("span", { text: `${o.source_document} · page ${o.source_page}${o.source_page_label ? ` (printed ${o.source_page_label})` : ""} · ${o.source_table || o.table_id}` }), toggle)),
+    kv,
+    h("div", { class: "section" }, h("h3", { text: "Checks" }), flags.length ? flags.map(flagRow) : h("div", { class: "muted", text: "No flags." })),
+    group, history(data.history),
+    h("div", { class: "decision" },
+      h("div", { class: "row" },
+        h("button", { class: "btn good", onclick: () => decide("accepted") }, "Accept", h("kbd", { text: "A" })),
+        h("button", { class: "btn bad", onclick: () => decide("rejected") }, "Reject", h("kbd", { text: "R" })),
+        corrInput, h("button", { class: "btn", onclick: () => decide("corrected") }, "Save correction", h("kbd", { text: "C" })),
+        data.decision ? h("button", { class: "btn", text: "Undo decision", onclick: () => decide("reset") }) : null),
+      h("div", { style: "margin-top:8px" }, note),
+      h("div", { class: "muted", style: "font-size:12px;margin-top:4px", text: `Saved as “${reviewer()}”. Corrections: enter INR crore; deficits negative. The extracted value is always kept.` })));
+  S.current = { target_type: "observation", target_id: o.observation_id,
+    context: { variable: o.canonical_variable, financial_year: o.financial_year, value: o.value, raw_label: o.raw_label,
+               document: o.source_document, page: o.source_page, table: o.source_table } };
+}
+async function renderRow(it) {
+  const box = $("#detail");
+  let data; try { data = await api(`/api/row?doc=${encodeURIComponent(it.document_id)}&table=${encodeURIComponent(it.table_id)}&label=${encodeURIComponent(it.raw_label)}`); }
+  catch (e) { fill(box, h("div", { class: "empty", text: e.message })); return; }
+  const sel = h("select", { id: "rowvar" }, h("option", { value: "", text: "Choose the variable…" }),
+    Object.keys(S.variables).filter(v => S.variables[v].role !== "optional").map(v => h("option", { value: v, text: pretty(v) })),
+    h("option", { value: "NONE", text: "None of these (not a target variable)" }));
+  fill(box, 
+    h("div", { class: "d-head" }, h("h2", { text: "Unmapped row" }), h("span", { class: "pill warning", text: "LLM could not decide" }), decisionPill(data.decision)),
+    h("div", { class: "hero", style: "font-size:24px", text: `“${data.label}”` }),
+    h("div", { class: "figure" }, h("img", { alt: "Source table", src: `/api/image?doc=${it.document_id}&table=${it.table_id}` }),
+      h("div", { class: "cap" }, h("span", { text: `${it.source_document} · page ${data.page} · ${data.caption || it.table_id}` }))),
+    h("div", { class: "section" }, h("h3", { text: "Values in this row (from the parsed cells)" }),
+      h("table", {}, h("tbody", {}, data.cells.map(c => h("tr", {}, h("td", { text: c.fy || "—" }), h("td", { class: "num r", text: c.raw_text }),
+        h("td", { class: "muted", text: c.accepted ? c.column_header : "column skipped" })))))),
+    h("div", { class: "section" }, h("h3", { text: "Model notes" }), (it.reasons || []).map(r => h("div", { class: "secondary", text: r }))),
+    history(data.history),
+    h("div", { class: "decision" }, h("div", { class: "row" }, sel,
+        h("button", { class: "btn primary", text: "Save mapping", onclick: () => {
+          const v = sel.value; if (!v) return toast("Choose a variable");
+          decide(v === "NONE" ? "none" : "mapped", { variable: v === "NONE" ? null : v }); } }),
+        data.decision ? h("button", { class: "btn", text: "Undo decision", onclick: () => decide("reset") }) : null),
+      h("div", { style: "margin-top:8px" }, h("textarea", { id: "note", placeholder: "Why (optional)" })),
+      h("div", { class: "muted", style: "font-size:12px;margin-top:4px", text: "The row's cells become observations on the next rebuild; values still come from the PDF." })));
+  S.current = { target_type: "row_label", target_id: it.target_id, context: { label: data.label, table: data.caption, page: data.page } };
+}
+function renderMissing(it) {
+  fill($("#detail"), 
+    h("div", { class: "d-head" }, h("h2", { text: `Missing: ${pretty(it.variable)}` }), h("span", { class: "secondary", text: it.state || "" }), decisionPill(it.decision)),
+    h("p", { class: "secondary", text: (S.variables[it.variable] || {}).description || "" }),
+    h("p", { text: "No document processed so far contains a row the pipeline could map to this variable. If you know where it is, add that PDF and run again; if the documents genuinely lack it, acknowledge it here with a note." }),
+    h("div", { class: "decision" }, h("div", { class: "row" },
+      h("button", { class: "btn primary", text: "Acknowledge", onclick: () => decide("acknowledged") }),
+      it.decision ? h("button", { class: "btn", text: "Undo", onclick: () => decide("reset") }) : null),
+      h("div", { style: "margin-top:8px" }, h("textarea", { id: "note", placeholder: "e.g. 'SFAR has no transfers table; use Finance Accounts vol. I Statement 14'" }))));
+  S.current = { target_type: "missing", target_id: it.target_id, context: { variable: it.variable, state: it.state } };
+}
+async function decide(decision, extra = {}) {
+  if (!S.current) return;
+  const body = { ...S.current, decision, reviewer: reviewer(), note: ($("#note") || {}).value || "", ...extra };
+  if (decision === "corrected") {
+    const raw = ($("#corr") || {}).value || ""; const v = parseFloat(raw.replace(/,/g, ""));
+    if (!raw.trim() || Number.isNaN(v)) { $("#corr") && $("#corr").focus(); return toast("Type the correct value first"); }
+    body.value = v;
+  }
+  try { await post("/api/review", body); } catch (e) { return toast(e.message); }
+  toast(decision === "reset" ? "Decision withdrawn" : `Saved: ${decision} · outputs will rebuild`);
+  const i = S.items.findIndex(x => x.item_id === (S.sel && S.sel.item_id));
+  await loadQueue(true);
+  const status = $("#q-status").querySelector("[aria-pressed=true]").dataset.v;
+  if (status === "open" && decision !== "reset" && S.items.length) selectItem(Math.min(Math.max(i, 0), S.items.length - 1));
+}
+async function pick(chosen, all) {
+  try { await post("/api/review/pick", { chosen_id: chosen, others: all, reviewer: reviewer(), note: ($("#note") || {}).value || "" }); }
+  catch (e) { return toast(e.message); }
+  toast("Picked · the others are rejected; outputs will rebuild"); S.sel = null; loadQueue();
+}
+document.addEventListener("keydown", e => {
+  if (S.tab !== "review" || e.metaKey || e.ctrlKey || e.altKey) return;
+  const typing = /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName);
+  if (typing) { if (e.key === "Escape") document.activeElement.blur(); return; }
+  if (e.key === "j") nextItem(1); else if (e.key === "k") nextItem(-1);
+  else if (S.current && S.current.target_type === "observation") {
+    if (e.key === "a") decide("accepted"); else if (e.key === "r") decide("rejected");
+    else if (e.key === "c") { e.preventDefault(); $("#corr") && $("#corr").focus(); }
+  }
+});
+async function openObservation(id) {
+  showTab("review");
+  let data; try { data = await api(`/api/observation?id=${encodeURIComponent(id)}`); } catch (e) { return toast(e.message); }
+  S.sel = null; $("#q-list").querySelectorAll(".qitem").forEach(el => el.setAttribute("aria-selected", "false"));
+  renderObservation(data, S.items.find(x => x.target_id === id));
+}
+
+/* ---------------- panel ---------------- */
+const PSTATUS = {
+  auto: ["good", "✓", "Accepted automatically"], verified: ["good", "✓✓", "Verified by reviewer"],
+  review: ["warning", "!", "In panel, needs review"], derived: ["neutral", "Σ", "Derived from components"],
+  excluded: ["critical", "✕", "Excluded (conflict or error)"], none: ["muted", "", "No data"] };
+function cellStatus(c) {
+  if (!c) return "none";
+  if (c.panel_status === "excluded") return "excluded";
+  if (c.panel_status === "derived") return "derived";
+  const d = c.pending_decision ? c.pending_decision.decision : c.review_decision;
+  if (d === "accepted" || d === "corrected") return "verified";
+  return c.review_status === "NEEDS_REVIEW" ? "review" : "auto";
+}
+async function loadPanel() {
+  let data; try { data = await api("/api/panel"); } catch (e) { return; }
+  fill($("#p-legend"), ...Object.values(PSTATUS).map(([cls, glyph, label]) =>
+    h("span", {}, h("span", { class: `st ${cls}`, "aria-hidden": "true", text: glyph }), label)));
+  const wrap = $("#p-wrap");
+  if (!data.cells.length) { fill(wrap, h("div", { class: "empty", text: "No panel yet. Run an extraction." })); return; }
+  const stSel = $("#p-state"); stSel.classList.toggle("hidden", data.states.length < 2);
+  if (stSel.options.length !== data.states.length) fill(stSel, ...data.states.map(s => h("option", { value: s, text: s })));
+  const state = stSel.value || data.states[0];
+  const cells = new Map(data.cells.filter(c => c.state === state).map(c => [`${c.financial_year}|${c.variable}`, c]));
+  const vars = data.variables.filter(v => data.cells.some(c => c.variable === v) || S.variables[v]?.role === "core");
+  const years = data.years.filter(y => vars.some(v => cells.has(`${y}|${v}`)));
+  const tip = $("#tooltip");
+  const showTip = (el, c, v, y) => {
+    const [cls, glyph, label] = PSTATUS[cellStatus(c)];
+    fill(tip, h("div", { class: "secondary", text: `${pretty(v)} · ${y}` }), h("div", { class: "tv num", text: c ? fmt(c.value) : "No data" }),
+      h("div", { class: "row", style: "gap:6px;margin-top:4px" }, h("span", { class: `st ${cls}`, text: glyph }), label),
+      c && c.reason ? h("div", { class: "secondary", style: "margin-top:4px", text: c.reason }) : null,
+      c && c.source_document ? h("div", { class: "muted", style: "margin-top:4px", text: `${c.source_document} · p.${c.source_page ?? "–"} · ${c.source_table || ""}` }) : null,
+      c && c.n_observations > 1 ? h("div", { class: "muted", text: `${c.n_observations} observations (${c.reconciliation_status})` }) : null);
+    const r = el.getBoundingClientRect(); tip.classList.remove("hidden");
+    const tw = tip.offsetWidth, th = tip.offsetHeight;
+    tip.style.left = `${Math.min(window.innerWidth - tw - 8, Math.max(8, r.left + r.width / 2 - tw / 2))}px`;
+    tip.style.top = `${r.top - th - 8 < 8 ? r.bottom + 8 : r.top - th - 8}px`;
+  };
+  const hideTip = () => tip.classList.add("hidden");
+  const table = h("table", { class: "panel-table" },
+    h("thead", {}, h("tr", {}, h("th", { text: "Year" }), vars.map(v => h("th", { class: "r", title: S.variables[v]?.description || v, text: pretty(v) })))),
+    h("tbody", {}, years.map(y => h("tr", {}, h("th", { class: "num", text: y }), vars.map(v => {
+      const c = cells.get(`${y}|${v}`); const st = cellStatus(c); const [cls, glyph, label] = PSTATUS[st];
+      const td = h("td", { class: `pcell r ${cls}`, tabindex: 0, "aria-label": `${pretty(v)} ${y}: ${c ? fmt(c.value) : "no data"}, ${label}` },
+        h("span", { class: "inner" }, h("span", { class: `st ${cls}`, "aria-hidden": "true", text: glyph }), h("span", { text: c && c.value !== null ? fmt(c.value) : "—" })));
+      td.addEventListener("pointerenter", () => showTip(td, c, v, y)); td.addEventListener("pointerleave", hideTip);
+      td.addEventListener("focus", () => showTip(td, c, v, y)); td.addEventListener("blur", hideTip);
+      const target = c && (c.representative_observation_id || (c.agreeing_observation_ids || "").split(" | ")[0] || (c.other_observation_ids || "").split(" | ")[0]);
+      if (target) { td.addEventListener("click", () => { hideTip(); openObservation(target); });
+        td.addEventListener("keydown", e => { if (e.key === "Enter") { hideTip(); openObservation(target); } }); }
+      return td;
+    })))));
+  fill(wrap, table);
+}
+$("#p-state").addEventListener("change", loadPanel);
+
+/* ---------------- observations ---------------- */
+async function loadObs() {
+  fillVariableSelects();
+  const params = new URLSearchParams({ q: $("#o-search").value, variable: $("#o-variable").value, review_status: $("#o-status").value });
+  let data; try { data = await api(`/api/observations?${params}`); } catch (e) { return; }
+  $("#o-count").textContent = `${data.total} observation(s)${data.total > data.observations.length ? `, showing ${data.observations.length}` : ""}`;
+  const cols = [["Year", "financial_year"], ["Variable", "canonical_variable"], ["Value", "value"], ["Row label", "raw_label"], ["Page", "source_page"],
+    ["Table", "source_table"], ["Document", "source_document"], ["Conf.", "confidence"], ["Status", "review_status"], ["Mapping", "mapping_method"]];
+  fill($("#o-table"), h("thead", {}, h("tr", {}, cols.map(([l, k]) => h("th", { class: ["value", "source_page", "confidence"].includes(k) ? "r" : null, text: l })))),
+    h("tbody", {}, data.observations.map(o => h("tr", { class: "click", tabindex: 0, onclick: () => openObservation(o.observation_id),
+        onkeydown: e => { if (e.key === "Enter") openObservation(o.observation_id); } },
+      cols.map(([, k]) => h("td", { class: ["value", "source_page", "confidence"].includes(k) ? "r num" : null,
+        text: k === "value" ? fmt(o[k]) : k === "canonical_variable" ? pretty(o[k]) : k === "review_status" ? (o[k] || "").replace(/_/g, " ").toLowerCase()
+          : String(o[k] ?? "").slice(0, 60) }))))));
+}
+let obsTimer; $("#o-search").addEventListener("input", () => { clearTimeout(obsTimer); obsTimer = setTimeout(loadObs, 250); });
+["#o-variable", "#o-status"].forEach(id => $(id).addEventListener("change", loadObs));
+
+/* ---------------- documents & runs ---------------- */
+async function loadDocs() {
+  let docs, runs; try { [docs, runs] = await Promise.all([api("/api/documents"), api("/api/runs")]); } catch (e) { return; }
+  fill($("#d-table"), h("thead", {}, h("tr", {}, ["File", "State", "Type", "Report year", "Pages", "Status", "Stages", "Last error"].map(t => h("th", { text: t })))),
+    h("tbody", {}, docs.map(d => h("tr", {}, h("td", { title: d.document_id, text: d.file }), h("td", { text: d.state || "—" }),
+      h("td", { text: (d.document_type || "").replace(/_/g, " ") }), h("td", { text: d.report_year || "—" }), h("td", { class: "num", text: d.pages ?? "" }),
+      h("td", { text: d.status }), h("td", { class: "muted", text: Object.entries(d.stages).map(([k, v]) => `${k.toLowerCase().replace(/_/g, " ")}: ${v.status || "ok"}`).join(" · ") }),
+      h("td", { class: d.last_error ? "" : "muted", text: d.last_error || "—" })))));
+  fill($("#r-table"), h("thead", {}, h("tr", {}, ["Run", "Kind", "Status", "Started", "Finished", "Observations", "Open reviews", "Error"].map(t => h("th", { text: t })))),
+    h("tbody", {}, runs.map(r => h("tr", {}, h("td", { class: "mono", text: r.run_id }), h("td", { text: r.kind }), h("td", { text: r.status }),
+      h("td", { text: when(r.started_at) }), h("td", { text: when(r.finished_at) }), h("td", { class: "num", text: r.counters.observations_total ?? r.counters.observations ?? "" }),
+      h("td", { class: "num", text: r.counters.review_open ?? "" }), h("td", { text: r.error || "" })))));
+}
+
+/* ---------------- live connection ---------------- */
+function connect() {
+  const es = new EventSource("/api/stream");
+  const conn = (cls, text) => { $("#conn").className = `chip ${cls}`; $("#conn-text").textContent = text; };
+  es.addEventListener("open", () => conn("good", "live"));
+  es.addEventListener("log", e => appendEvents(JSON.parse(e.data)));
+  es.addEventListener("overview", e => renderOverview(JSON.parse(e.data)));
+  es.addEventListener("error", () => conn("warn", "reconnecting…"));
+}
+setInterval(() => { if (S.overview && S.overview.active) renderOverview(S.overview); }, 1000);   // tick elapsed time
+loadFiles(); connect();
+</script>
+</body>
+</html>
